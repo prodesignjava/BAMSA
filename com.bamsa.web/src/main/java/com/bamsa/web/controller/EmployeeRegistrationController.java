@@ -296,7 +296,7 @@ public class EmployeeRegistrationController {
       			break;
 			case  5:if(sid==5)
 	  			{
-		  		request.setAttribute("stream", "of ACCOUNTS Department");  			
+		  		request.setAttribute("stream", "of ACCOUNTS & FINANCE Department");  			
 	  			}
 	  			break;
 	  		case  6:if(sid==6)
@@ -338,6 +338,16 @@ public class EmployeeRegistrationController {
 	  		case  13:if(sid==13)
 			{
 				request.setAttribute("stream", " of HR Executive Department");  			
+			}
+			break;
+	  		case  14:if(sid==14)
+			{
+				request.setAttribute("stream", " of Domestic IT Recruitment Department");  			
+			}
+			break;
+	  		case  15:if(sid==15)
+			{
+				request.setAttribute("stream", " of PYTHON Developers");  			
 			}
 			break;
     
