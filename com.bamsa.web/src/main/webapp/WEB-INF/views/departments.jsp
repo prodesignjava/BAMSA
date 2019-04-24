@@ -139,7 +139,7 @@ $( document ).ready(function() {
     
        <div class="col-sm-2">
         <div class="circle circle3">
-          <a href="<%=request.getContextPath( )%>/Newtask?sid=10"><h2>11<p>T & D</p></h2></a>
+          <a href="<%=request.getContextPath( )%>/Newtask?sid=10"><h2>11<p>T&D</p></h2></a>
         </div>
       </div>
       

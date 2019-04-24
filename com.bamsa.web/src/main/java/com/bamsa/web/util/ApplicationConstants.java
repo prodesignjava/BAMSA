@@ -27,6 +27,9 @@ public class ApplicationConstants {
 	public static final int HR_EXECUTIVE=13;
 	public static final int DOMESTIC_IT=14;
 	public static final int PYTHON=15;
+	public static final int BUSINESS_DEVELOPMENT_EXECUTIVE=16;
+	public static final int RPO_CLIENT_MANAGER=17;
+	public static final int ACCOUNTS_MANAGER=18;
 	public static final int PAY_AND_BENEFITS=1;
 	public static final int WORK_LOADS=2;
 	public static final int WORK_CONDITIONS=3;
