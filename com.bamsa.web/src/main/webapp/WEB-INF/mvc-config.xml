@@ -39,7 +39,7 @@
 		<property name="driverClassName" value="org.gjt.mm.mysql.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/bamsa" />
 		<property name="username" value="root" />
-		<property name="password" value="prodesign@124" />
+		<property name="password" value="prodesign@123" />
 	</bean>
 	<bean id="dbProps"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
