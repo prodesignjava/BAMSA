@@ -155,7 +155,7 @@ $( document ).ready(function() {
         </li>
        <li>
           <div class="timeline-badge dang"><i class="fa fa-male"></i></div>
-          <div class="timeline-panel">
+          <div class="timeline-panel"> 
             <div class="timeline-heading">
               <a href="#!" > <h4 class="timeline-title" style="color:#d94fc9">Recruitment Department</h4>
             </div>
@@ -183,7 +183,7 @@ $( document ).ready(function() {
           <div class="timeline-badge info"><i class="fa fa-briefcase"></i></div>
           <div class="timeline-panel">
             <div class="timeline-heading">
-              <a href="#!" > <h4 class="timeline-title" style="color:#5bc0de">Sales Department</h4>
+              <a href="#!" > <h4 class="timeline-title" style="color:#F7512D">Sales Department</h4>
             </div>
             <div class="timeline-body">
             <a href="<%=request.getContextPath( )%>/Employees?sid=11" class="button button-neutral" title="Business Development Management">BDM</a>
