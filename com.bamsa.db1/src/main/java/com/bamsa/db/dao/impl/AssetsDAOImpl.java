@@ -19,24 +19,20 @@ import com.bamsa.db.beans.CompanyAssetsBean;
 import com.bamsa.db.beans.CompanyComponentBean;
 import com.bamsa.db.beans.CompanyConsumableBean;
 import com.bamsa.db.beans.CompanyLicensesBean;
-import com.bamsa.db.beans.EmployeeDetails;
 import com.bamsa.db.beans.NewBranchBean;
 import com.bamsa.db.dao.AssetsDAO;
 import com.bamsa.db.exceptions.DBUpdateException;
-import com.bamsa.db.impls.mappers.CompanyConsumableRowMapper;
-import com.bamsa.db.impls.mappers.CompanyLicenseRowMapper;
-import com.bamsa.db.impls.mappers.ReportUserRowMapper;
-import com.bamsa.db.impls.stmtsetters.BrokenStatusUpdateStmtSetter;
-import com.bamsa.db.impls.stmtsetters.RepairStatusUpdateStmtSetter;
-import com.bamsa.db.impls.stmtsetters.UserDetailStmtSetter;
 import com.bamsa.db.impls.mappers.AssetTicketRowMpper;
 import com.bamsa.db.impls.mappers.CompanyAccessoryRowMapper;
 import com.bamsa.db.impls.mappers.CompanyAssetsRowMapper;
 import com.bamsa.db.impls.mappers.CompanyComponentRowMapper;
-import com.bamsa.db.impls.mappers.EmployeeDetailsRowMapper;
+import com.bamsa.db.impls.mappers.CompanyConsumableRowMapper;
+import com.bamsa.db.impls.mappers.CompanyLicenseRowMapper;
+import com.bamsa.db.impls.stmtsetters.AssetTakeHomeStmtSetter;
+import com.bamsa.db.impls.stmtsetters.BrokenStatusUpdateStmtSetter;
+import com.bamsa.db.impls.stmtsetters.RepairStatusUpdateStmtSetter;
 import com.bamsa.db.util.DBConstants;
 import com.bamsa.db.util.ErrorConstants;
-import com.bamsa.db.impls.stmtsetters.AssetTakeHomeStmtSetter;
 @Repository
 public class AssetsDAOImpl implements AssetsDAO{
 	@Autowired
