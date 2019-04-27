@@ -71,6 +71,10 @@ boolean showgrievanceform=false;
 if( empModel!=null && empModel.getDesigId()==0){
 	showgrievanceform=true;
 }
+boolean clientLeadShow=false;
+if((empModel!=null) && (empModel.getDesigId() == 0 || empModel.getDesigId() == 6 || empModel.getStreamId()==11 || empModel.getStreamId()==16 || empModel.getStreamId()==17 || empModel.getStreamId()==18) ) {
+	clientLeadShow=true;
+}
  %>
   <% 
  boolean mileStonesShow=false;
@@ -130,12 +134,16 @@ if( empModel!=null && empModel.getDesigId()==0){
 			<li id="ganttchart"><a href="<%=request.getContextPath( )%>/ganttcharts"><i class="fa fa-area-chart"></i>Gantt charts</a></li>
 			
 			<li id="assets"><a href="<%=request.getContextPath() %>/showTicket"><i class="fa fa-database"></i>Asset Tracking</a></li>
+			 <%if(clientLeadShow){%>
+	          <li id="Lead"><a href="<%=request.getContextPath() %>/showTicket"><i class="fa fa-user"></i>Lead Tracking</a></li>
+                <%}%>
 			 <%if(mileStonesShow){%>
 			<li id="milestones"><a href="<%=request.getContextPath( )%>/Milestones"><i class="fa fa-flag-o"></i>My Milestones</a></li>
 				<%}%>
 				<%if(registrationShow){%>
 			<li id="registration"><a href="<%=request.getContextPath( )%>/registration" ><i class="fa fa-pencil-square-o"></i> Registration form</a></li>
-	          <%}%>	
+	          <%}%>
+	          	
                 </ul>
               </div>
              
