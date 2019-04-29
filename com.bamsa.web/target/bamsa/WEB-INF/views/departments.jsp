@@ -124,6 +124,7 @@ $( document ).ready(function() {
           <a href="<%=request.getContextPath( )%>/Newtask?sid=9"><h2>10<p>P & C</p></h2></a>
         </div>
       </div>
+      
        
       
       <div class="col-sm-2">
@@ -139,7 +140,7 @@ $( document ).ready(function() {
     
        <div class="col-sm-2">
         <div class="circle circle3">
-          <a href="<%=request.getContextPath( )%>/Newtask?sid=10"><h2>11<p>T & D</p></h2></a>
+          <a href="<%=request.getContextPath( )%>/Newtask?sid=10"><h2>11<p>T&D</p></h2></a>
         </div>
       </div>
       
@@ -160,9 +161,10 @@ $( document ).ready(function() {
       </div>
         <div class="col-sm-2">
         <div class="circle circle3">
-          <a href="<%=request.getContextPath( )%>/Newtask?sid=15"><h2>15<p>PYTHON</p></h2></a>
+          <a href="<%=request.getContextPath( )%>/Newtask?sid=16"><h2>15<p>BDE</p></h2></a>
         </div>
       </div>
+      
       <div class="col-sm-2">
         
       </div>
@@ -170,6 +172,31 @@ $( document ).ready(function() {
         
       </div>
     </section>
+    <div class="row">
+		<section class="section_0">
+    
+    
+       <div class="col-sm-2">
+        <div class="circle circle3">
+          <a href="<%=request.getContextPath( )%>/Newtask?sid=17"><h2>16<p>RPO Manager</p></h2></a>
+        </div>
+      </div>
+      
+      <div class="col-sm-2">
+        <div class="circle circle3">
+          <a href="<%=request.getContextPath( )%>/Newtask?sid=18"><h2>17<p>Account Manager</p></h4></a>
+        </div>
+      </div> 
+      
+      
+      
+      <div class="col-sm-2">
+        
+      </div>
+      
+        
+      </div>
+      </section>
 	</div>
 </div>
 		</div>

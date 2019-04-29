@@ -96,12 +96,7 @@ $( document ).ready(function() {
             </div>
             <div class="timeline-body">
             <a href="<%=request.getContextPath( )%>/Employees?sid=4" class="button button-neutral">UI</a>
-            </div>
-             <div class="timeline-body">
-            <a href="<%=request.getContextPath( )%>/Employees?sid=15"  class="button button-neutral">PYTHON</a>
-            
-            </div>
-				
+            </div>			
             </div>
          
         </li>
@@ -124,17 +119,17 @@ $( document ).ready(function() {
               <a href="#!" > <h4 class="timeline-title" style="color:red">Operations & Accounts Department</h4>
             </div>
             <div class="timeline-body">
-            <a href="<%=request.getContextPath( )%>/Employees?sid=5" class="button button-neutral">A & F</a>
+            <a href="<%=request.getContextPath( )%>/Employees?sid=5" class="button button-neutral" title="Accounts & Finance">A&F</a>
             
               
             </div>
             <div class="timeline-body">
-           <a href="<%=request.getContextPath( )%>/Employees?sid=9"  class="button button-neutral">P & C</a>
+           <a href="<%=request.getContextPath( )%>/Employees?sid=9"  class="button button-neutral" title="Payroll & Compensation">P&C</a>
             
               
             </div>
              <div class="timeline-body">
-            <a href="<%=request.getContextPath( )%>/Employees?sid=6"  class="button button-neutral">A & O</a>
+            <a href="<%=request.getContextPath( )%>/Employees?sid=6"  class="button button-neutral" title="Administration & Operations">A&O</a>
             
               
             </div>
@@ -147,12 +142,12 @@ $( document ).ready(function() {
             <div class="timeline-heading">
                <a href="#!" ><h4 class="timeline-title" style="color:#0066cc">Management Department</h4>
              </div>
-            <div class="timeline-body">
-           <a href="<%=request.getContextPath( )%>/Employees?sid=10" class="button button-neutral">T & D</a>
-             </div>
+           <%--  <div class="timeline-body">
+           <a href="<%=request.getContextPath( )%>/Employees?sid=10" class="button button-neutral" title="Training & Development">T&D</a>
+             </div> --%>
             
              <div class="timeline-body">
-            <a href="<%=request.getContextPath( )%>/Employees?sid=11"  class="button button-neutral">BDM</a>
+            <a href="<%=request.getContextPath( )%>/Employees?sid=18"  class="button button-neutral">Account's Manager</a>
             
               
             </div>
@@ -160,7 +155,7 @@ $( document ).ready(function() {
         </li>
        <li>
           <div class="timeline-badge dang"><i class="fa fa-male"></i></div>
-          <div class="timeline-panel">
+          <div class="timeline-panel"> 
             <div class="timeline-heading">
               <a href="#!" > <h4 class="timeline-title" style="color:#d94fc9">Recruitment Department</h4>
             </div>
@@ -184,6 +179,25 @@ $( document ).ready(function() {
             
           </div>
         </li>
+         <li>
+          <div class="timeline-badge info"><i class="fa fa-briefcase"></i></div>
+          <div class="timeline-panel">
+            <div class="timeline-heading">
+              <a href="#!" > <h4 class="timeline-title" style="color:#F7512D">Sales Department</h4>
+            </div>
+            <div class="timeline-body">
+            <a href="<%=request.getContextPath( )%>/Employees?sid=11" class="button button-neutral" title="Business Development Management">BDM</a>
+            </div>
+            <div class="timeline-body">
+            <a href="<%=request.getContextPath( )%>/Employees?sid=16" class="button button-neutral" title="Business Development Executive">BDE</a>
+            </div>
+            <div class="timeline-body">
+            <a href="<%=request.getContextPath( )%>/Employees?sid=17" class="button button-neutral" title="RPO Manager/Client Acquisition Manager" >RPO/CAM</a>
+            </div>
+            
+          </div>
+        </li>
+        
     </ul>
 </div>
  </div>

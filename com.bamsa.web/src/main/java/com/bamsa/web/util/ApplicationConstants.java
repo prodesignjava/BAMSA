@@ -49,4 +49,5 @@ public class ApplicationConstants {
 	public static final String READY_TO_DEPLOY="READY TO DEPLOY";
 	public static final int IMAGE_FILE_SIZE=5100;
 	public static final String FILE_PATH = "FILE_PATH";
+	public static final String DEFAULT_EMAIL="info@prodesigntek.com";
 }

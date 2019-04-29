@@ -83,6 +83,11 @@ if(clockedIn=="clockin"){
  if(null!=empModel && empModel.getDesigId()==0){
  	showgrievanceform=true;
  }
+boolean clientLeadShow=false;
+ 
+ if(null!=empModel && (empModel.getDesigId() == 0 || empModel.getDesigId() == 8 || empModel.getStreamId()==11 || empModel.getStreamId()==16 || empModel.getStreamId()==17 || empModel.getStreamId()==18)) {
+	 clientLeadShow=true;
+ }
  %>
  <% 
  boolean mileStonesShow=false;
@@ -213,6 +218,16 @@ $( document ).ready(function() {
           	
            </div>
            <%} %>
+           <%if(clientLeadShow){%>
+           <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+              <span class="count_top"><b>Lead Tracking </b> </span>
+             <div >
+              <i class="fa fa-user fa-4x green"></i>
+              </div>
+              <span class="count_bottom"><i class="fa fa-eye"></i><a href="<%=request.getContextPath( )%>/showTicket"> View Details</a></span>
+            </div>
+             <%} %>
+            
           </div>
           <!-- /top tiles -->
 

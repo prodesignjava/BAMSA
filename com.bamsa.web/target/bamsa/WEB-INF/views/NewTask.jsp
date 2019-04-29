@@ -146,7 +146,8 @@ function assignTask(){
 	
 	$.ajax({
 		type: "post",
-		url: "/bamsa/assignTask",
+		 url: "/com.bamsa.web/assignTask",
+		/* url:"/bamsa/assignTask", */
 		data:formData,
 		success:function(){
 			$("#dialogbox").dialog("close");

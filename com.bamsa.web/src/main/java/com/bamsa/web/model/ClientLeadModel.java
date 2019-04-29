@@ -15,6 +15,7 @@ public class ClientLeadModel {
 	private String feedbackStatus;
 	private String createdBy;
 	private String meetingDetails;
+	private int raisedBy;
 	public int getCid() {
 		return cid;
 	}
@@ -80,6 +81,12 @@ public class ClientLeadModel {
 	}
 	public void setMeetingDetails(String meetingDetails) {
 		this.meetingDetails = meetingDetails;
+	}
+	public int getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(int raisedBy) {
+		this.raisedBy = raisedBy;
 	}
 
 }

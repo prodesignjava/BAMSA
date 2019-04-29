@@ -1,16 +1,14 @@
 package com.bamsa.web.service;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.bamsa.db.beans.ContactBean;
 import com.bamsa.db.exceptions.DBUpdateException;
 import com.bamsa.web.exceptions.UserLoginException;
 import com.bamsa.web.model.AssetTicketModel;
 import com.bamsa.web.model.CandidateInfoModel;
-
+import com.bamsa.web.model.ClientLeadModel;
 import com.bamsa.web.model.ClockTimeModel;
 import com.bamsa.web.model.CompanyAccessoryModel;
 import com.bamsa.web.model.CompanyAssetModel;
@@ -88,9 +86,11 @@ public interface UserService {
     public List<CandidateInfoModel> getCandidateDetails(); 
     public OpeningInfoModel getOpeningdetails(int rqid);
     public List<OpeningInfoModel> getAllOpeningdetails();
+    public List<EmployeeModel> getEmployeeLeadReportingDetails();
     public CandidateInfoModel updateCandidateDetails(CandidateInfoModel candidatedetails)throws DBUpdateException;
     public OpeningInfoModel updatedOpeningDetails(OpeningInfoModel openingdetails)throws DBUpdateException;
     public CandidateInfoModel updateHotlistDetails(CandidateInfoModel hotlistdetails)throws DBUpdateException;
     public List<ContactModel> getSubcontractEmails();
     public ContactModel updateContactDetails(ContactModel contactdetails)throws DBUpdateException;
+	public ClientLeadModel saveClientLead(ClientLeadModel clientLeadModel);
 }

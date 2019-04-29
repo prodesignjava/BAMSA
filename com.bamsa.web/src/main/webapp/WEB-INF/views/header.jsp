@@ -72,7 +72,7 @@ if( empModel!=null && empModel.getDesigId()==0){
 	showgrievanceform=true;
 }
 boolean clientLeadShow=false;
-if((empModel!=null) && (empModel.getDesigId() == 0 || empModel.getDesigId() == 6 || empModel.getStreamId()==11 || empModel.getStreamId()==16 || empModel.getStreamId()==17 || empModel.getStreamId()==18) ) {
+if((empModel!=null) && (empModel.getDesigId() == 0 || empModel.getDesigId() == 8 || empModel.getStreamId()==11 || empModel.getStreamId()==16 || empModel.getStreamId()==17 || empModel.getStreamId()==18) ) {
 	clientLeadShow=true;
 }
  %>

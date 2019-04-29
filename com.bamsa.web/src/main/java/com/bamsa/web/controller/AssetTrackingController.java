@@ -453,6 +453,7 @@ public class AssetTrackingController {
         	email.setTo(recipientAddress);
         	email.setSubject(subject);
             email.setText(message);
+            email.setCc(ApplicationConstants.DEFAULT_EMAIL);
            
              
             // sends the e-mail

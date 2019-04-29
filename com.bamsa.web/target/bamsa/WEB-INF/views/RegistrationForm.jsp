@@ -274,8 +274,6 @@ List<String> branchnames = (List) request.getAttribute("report");
 									<option value="<%=ApplicationConstants.PHP %>"><b>PHP</b>
 									</option>
 									<option value="<%=ApplicationConstants.ANDROID %>"><b>Android</b>
-									<option value="<%=ApplicationConstants.PYTHON %>"><b>PYTHON</b>
-									</option>
 									</option>
 									<option value="<%=ApplicationConstants.UI%>"><b>UI</b>
 									</option>
@@ -304,6 +302,12 @@ List<String> branchnames = (List) request.getAttribute("report");
 									<option
 										value="<%=ApplicationConstants.BUSINESS_DEVELOPMENT_AND_TRAINING %>"><b>Business
 											Development & Marketing></b>
+									</option>
+									<option value="<%=ApplicationConstants.BUSINESS_DEVELOPMENT_EXECUTIVE %>"><b>Business Development Executive</b>
+									</option>
+									<option value="<%=ApplicationConstants.RPO_CLIENT_MANAGER %>"><b>RPO/Client Acquisition Manager</b>
+									</option>
+									<option value="<%=ApplicationConstants.ACCOUNTS_MANAGER %>"><b>Account Manager</b>
 									</option>
 									<option value="<%=ApplicationConstants.DOMESTIC_IT %>"><b>Domestic IT</b>
 									</option>

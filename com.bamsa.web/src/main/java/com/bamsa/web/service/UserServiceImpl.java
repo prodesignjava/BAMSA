@@ -4,11 +4,8 @@ package com.bamsa.web.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
 import java.util.HashMap;
-
 import java.util.List;
-
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +16,7 @@ import org.springframework.util.Base64Utils;
 
 import com.bamsa.db.beans.AssetTicketBean;
 import com.bamsa.db.beans.CandidateInfoBean;
-
+import com.bamsa.db.beans.ClientLeadBean;
 import com.bamsa.db.beans.ClockTimeBean;
 import com.bamsa.db.beans.CompanyAccessoryBean;
 import com.bamsa.db.beans.CompanyAssetsBean;
@@ -38,12 +35,22 @@ import com.bamsa.db.beans.OpeningInfoBean;
 import com.bamsa.db.beans.TaskDetails;
 import com.bamsa.db.beans.User;
 import com.bamsa.db.exceptions.DBUpdateException;
-import com.bamsa.web.controller.LoginController;
+import com.bamsa.db.facade.impl.UserFunctionsFacade;
+import com.bamsa.web.builder.AssetsBuilder;
+import com.bamsa.web.builder.CandidateInfoBuilder;
+import com.bamsa.web.builder.ClientLeadBuilder;
+import com.bamsa.web.builder.ClockTimeBuilder;
+import com.bamsa.web.builder.ContactBuilder;
+import com.bamsa.web.builder.EmployeeTaskBuilder;
+import com.bamsa.web.builder.GrievanceBuilder;
+import com.bamsa.web.builder.LoginBuilder;
+import com.bamsa.web.builder.OpeningInfoBuilder;
+import com.bamsa.web.builder.UserBuilder;
 import com.bamsa.web.exceptions.ExceptionConstants;
 import com.bamsa.web.exceptions.UserLoginException;
 import com.bamsa.web.model.AssetTicketModel;
 import com.bamsa.web.model.CandidateInfoModel;
-
+import com.bamsa.web.model.ClientLeadModel;
 import com.bamsa.web.model.ClockTimeModel;
 import com.bamsa.web.model.CompanyAccessoryModel;
 import com.bamsa.web.model.CompanyAssetModel;
@@ -52,24 +59,14 @@ import com.bamsa.web.model.CompanyConsumableModel;
 import com.bamsa.web.model.CompanyLicenseModel;
 import com.bamsa.web.model.ContactModel;
 import com.bamsa.web.model.EmployeeDetailsModel;
+import com.bamsa.web.model.EmployeeModel;
 import com.bamsa.web.model.EmployeeTaskModel;
 import com.bamsa.web.model.GrievanceDetailsModel;
 import com.bamsa.web.model.NewBranchModel;
 import com.bamsa.web.model.NewProjectModel;
 import com.bamsa.web.model.OpeningInfoModel;
 import com.bamsa.web.model.TaskDetailsModel;
-import com.bamsa.web.model.EmployeeModel;
 import com.bamsa.web.model.UserBean;
-import com.bamsa.web.builder.AssetsBuilder;
-import com.bamsa.web.builder.CandidateInfoBuilder;
-import com.bamsa.web.builder.ClockTimeBuilder;
-import com.bamsa.web.builder.ContactBuilder;
-import com.bamsa.web.builder.EmployeeTaskBuilder;
-import com.bamsa.web.builder.GrievanceBuilder;
-import com.bamsa.web.builder.LoginBuilder;
-import com.bamsa.web.builder.OpeningInfoBuilder;
-import com.bamsa.web.builder.UserBuilder;
-import com.bamsa.db.facade.impl.UserFunctionsFacade;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -97,6 +94,8 @@ public class UserServiceImpl implements UserService{
     private ContactBuilder contactBuilder;
     @Autowired
     private OpeningInfoBuilder openingInfoBuilder;
+    @Autowired
+    private ClientLeadBuilder clientLeadBuilder;
     
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
 	@Override
@@ -1296,5 +1295,29 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from updateContactDetails");
 		
 		return contactdetails;
+	}
+	@Override
+	public ClientLeadModel saveClientLead(ClientLeadModel clientLeadModel) {
+		logger.info("enter into saveClientLead");
+		ClientLeadBean bean= clientLeadBuilder.buildClientLeadBean(clientLeadModel);
+		bean= userFunctionsFacade.saveClientLead(bean);
+		return null;
+	}
+	@Override
+	public List<EmployeeModel> getEmployeeLeadReportingDetails() {
+		 logger.info("enter into getEmployeesLeadReportingDetails ");
+			List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesReportingDetails();
+			List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
+			if(null!=beans && beans.size()>0){
+				for(EmployeeDetails bean :beans){
+					EmployeeModel model= new EmployeeModel();
+					model.setEmpId(bean.getEmpId());
+					model.setUid(bean.getUid());
+					modelbeans.add(model);
+				}
+			}
+			logger.info(modelbeans);
+			logger.info("exit from userserviceimpl getEmployeesLeadReportingDetails");
+			return modelbeans;
 	}
 }
