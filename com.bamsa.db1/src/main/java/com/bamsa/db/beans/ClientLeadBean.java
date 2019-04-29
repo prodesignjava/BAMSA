@@ -15,6 +15,7 @@ public class ClientLeadBean {
 	private String feedbackStatus;
 	private String createdBy;
 	private String meetingDetails;
+	private String raisedBy;
 	public int getCid() {
 		return cid;
 	}
@@ -80,6 +81,12 @@ public class ClientLeadBean {
 	}
 	public void setMeetingDetails(String meetingDetails) {
 		this.meetingDetails = meetingDetails;
+	}
+	public String getRaisedBy() {
+		return raisedBy;
+	}
+	public void setRaisedBy(String raisedBy) {
+		this.raisedBy = raisedBy;
 	}
 
 }

@@ -20,6 +20,7 @@ public class DBConstants {
 	public final static String LOAD_INDIVIDUAL_TASKS_DETAILS="LOAD_INDIVIDUAL_TASKS_DETAILS";
 	public final static String RESET_PASSWORD="RESET_PASSWORD";
 	public final static String DEPARTMENT_DETAILS="DEPARTMENT_DETAILS";
+	public final static String LEAD_REPORTING_DETAILS="LEAD_REPORTING_DETAILS";
 	public final static String REPORTING_DETAILS="REPORTING_DETAILS";
 	public final static String LOAD_LICENSE_DETAILS="LOAD_LICENSE_DETAILS";
 	public final static String LOAD_CONSUMABLE_DETAILS="LOAD_CONSUMABLE_DETAILS";

@@ -30,6 +30,7 @@ public interface EmployeeDAO {
 	
 	public List<EmployeeDetails> getEmployeesDepartmentDetails();
 	 public List<EmployeeDetails> getEmployeesReportingDetals();
+	 public List<EmployeeDetails> getEmployeesLeadReportingDetails();
 	
 	
 }

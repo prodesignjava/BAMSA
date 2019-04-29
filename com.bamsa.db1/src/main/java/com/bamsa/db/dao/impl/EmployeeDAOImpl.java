@@ -25,6 +25,7 @@ import com.bamsa.db.dao.EmployeeDAO;
 import com.bamsa.db.impls.mappers.EmpIdRowMapper;
 import com.bamsa.db.impls.mappers.EmployeeDetailsRowMapper;
 import com.bamsa.db.impls.mappers.EmployeeDetailsUnderEmpRowMapper;
+import com.bamsa.db.impls.mappers.LeadReportUserRowMapper;
 import com.bamsa.db.impls.mappers.ReportUserRowMapper;
 import com.bamsa.db.util.DBConstants;
 
@@ -186,5 +187,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		List<EmployeeDetails> details=jdbcTemplate.query(empdetails,new ReportUserRowMapper());
 		logger.info(details);
 		return details;
+	}
+	@Override
+	public List<EmployeeDetails> getEmployeesLeadReportingDetails() {
+	logger.info("enter into getEmployeeLeadReportingDetails");
+	String empdetails=dbProps.getProperty(DBConstants.LEAD_REPORTING_DETAILS);
+	logger.info(empdetails);
+	List<EmployeeDetails> details= jdbcTemplate.query(empdetails, new LeadReportUserRowMapper());
+		return null;
 	}
 }

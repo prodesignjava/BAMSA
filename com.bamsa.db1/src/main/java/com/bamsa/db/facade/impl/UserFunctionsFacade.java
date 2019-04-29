@@ -1,6 +1,4 @@
 package com.bamsa.db.facade.impl;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -9,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.bamsa.db.beans.AssetTicketBean;
 import com.bamsa.db.beans.CandidateInfoBean;
-
+import com.bamsa.db.beans.ClientLeadBean;
 import com.bamsa.db.beans.ClockTimeBean;
 import com.bamsa.db.beans.CompanyAccessoryBean;
 import com.bamsa.db.beans.CompanyAssetsBean;
@@ -27,19 +25,20 @@ import com.bamsa.db.beans.NewProjectBean;
 import com.bamsa.db.beans.OpeningInfoBean;
 import com.bamsa.db.beans.TaskDetails;
 import com.bamsa.db.beans.User;
-import com.bamsa.db.facade.UserFunctions;
-import com.bamsa.db.dao.LoginDAO;
-import com.bamsa.db.dao.OpeningInfoDAO;
-import com.bamsa.db.dao.TimeSheetsDAO;
-import com.bamsa.db.exceptions.DBUpdateException;
 import com.bamsa.db.dao.AssetsDAO;
 import com.bamsa.db.dao.CandidateInfoDAO;
+import com.bamsa.db.dao.ClientLeadDAO;
 import com.bamsa.db.dao.ContactDAO;
 import com.bamsa.db.dao.EmployeeDAO;
 import com.bamsa.db.dao.EmployeeDetailsDAO;
 import com.bamsa.db.dao.EmployeeMappingsDAO;
 import com.bamsa.db.dao.EmployeeTaskDAO;
 import com.bamsa.db.dao.GrievanceDetailsDAO;
+import com.bamsa.db.dao.LoginDAO;
+import com.bamsa.db.dao.OpeningInfoDAO;
+import com.bamsa.db.dao.TimeSheetsDAO;
+import com.bamsa.db.exceptions.DBUpdateException;
+import com.bamsa.db.facade.UserFunctions;
 
 
 @Component
@@ -67,6 +66,8 @@ public class UserFunctionsFacade implements UserFunctions {
 	ContactDAO contactDAOImpl;
 	@Autowired
 	OpeningInfoDAO openingInfoDAOImpl;
+	@Autowired
+	ClientLeadDAO clientLeadDAOImpl;
 	private static Logger logger = Logger.getLogger(UserFunctionsFacade.class);
 	public User authenticateUser(User user){
 		logger.info("Enter into authenticateUser");
@@ -590,6 +591,18 @@ public class UserFunctionsFacade implements UserFunctions {
 		logger.info("enter into updateContactDetails");
 		logger.info("exit from updateContactDetails");
 		return contactDAOImpl.updateContactDetails(contactdetails);
+	}
+	@Override
+	public ClientLeadBean saveClientLead(ClientLeadBean clientLeadBean) {
+		logger.info("enter into saveClientLead");
+		logger.info("exit from saveClientLead");
+		return clientLeadDAOImpl.createClientLead(clientLeadBean);
+	}
+	@Override
+	public List<EmployeeDetails> getEmployeesLeadReportingDetails() {
+		logger.info("enter into getLeadEmployeeReportingDetails");
+		logger.info("Exit from getLeadEmployeeReportingDetails");
+		return employeeDAOImpl.getEmployeesLeadReportingDetails();
 	}
 	
 	

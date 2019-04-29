@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.bamsa.db.beans.AssetTicketBean;
 import com.bamsa.db.beans.CandidateInfoBean;
-
+import com.bamsa.db.beans.ClientLeadBean;
 import com.bamsa.db.beans.ClockTimeBean;
 import com.bamsa.db.beans.CompanyAccessoryBean;
 import com.bamsa.db.beans.CompanyAssetsBean;
@@ -87,4 +87,6 @@ public interface UserFunctions {
     public CandidateInfoBean updateHotlistDetails(CandidateInfoBean hotlistdetails)throws DBUpdateException;
     public List<ContactBean> getSubcontractEmails();
     public ContactBean updateContactDetails(ContactBean contactdetails)throws DBUpdateException;
+	public ClientLeadBean saveClientLead(ClientLeadBean clientLeadBean);
+	public List<EmployeeDetails> getEmployeesLeadReportingDetails();
 }
