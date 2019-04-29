@@ -111,21 +111,21 @@ public class ClientLeadController {
 		int uid =userData.getUid();
 		EmployeeDetailsModel empModel = (EmployeeDetailsModel)request.getSession().getAttribute(ApplicationConstants.EMPLOYEE_REGISTRATION_DETAILS);
 		int sid =empModel.getStreamId();
-		 List<EmployeeModel> reportdetails = userServiceImpl.getEmployeesReportingDetails();
-		List<AssetTicketModel> assetmodel = userServiceImpl.getAssetTicket();
+		 List<EmployeeModel> reportdetails = userServiceImpl.getEmployeeLeadReportingDetails();
+		List<ClientLeadModel>clientLeadModel = userServiceImpl.getClientLeadTicket();
 		if(sid == 18){
-			request.setAttribute("ticketDetails", assetmodel);
+			request.setAttribute("clientDetails", clientLeadModel);
 			}
 		else{
-			List<AssetTicketModel> individual = new ArrayList<AssetTicketModel>();
+			List<ClientLeadModel> individual = new ArrayList<ClientLeadModel>();
 			
-			for(AssetTicketModel ticket :assetmodel)
+			for(ClientLeadModel ticket :clientLeadModel)
 			{
-				if(ticket.getRisedby()==uid)
+				if(ticket.getRaisedBy()==uid)
 				{
 					individual.add(ticket);
 				}
-			request.setAttribute("ticketDetails",individual);
+			request.setAttribute("clientDetails",individual);
 			}
 		    }
 		
