@@ -604,6 +604,12 @@ public class UserFunctionsFacade implements UserFunctions {
 		logger.info("Exit from getLeadEmployeeReportingDetails");
 		return employeeDAOImpl.getEmployeesLeadReportingDetails();
 	}
+	@Override
+	public List<ClientLeadBean> getClientLeadTicket() {
+		logger.info("Enter Into getClientLeadTicket");
+		logger.info("exit from getClientLeadTicket");
+		return clientLeadDAOImpl.getClientLeadTicket();
+	}
 	
 	
 	

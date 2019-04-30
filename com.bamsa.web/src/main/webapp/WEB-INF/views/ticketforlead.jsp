@@ -1,7 +1,7 @@
-<%-- <%@page import="com.bamsa.web.util.ApplicationConstants"%>
+ <%@page import="com.bamsa.web.util.ApplicationConstants"%>
 <%@page import="com.bamsa.web.model.UserBean"%>
 <%@page import="com.bamsa.web.model.EmployeeModel"%>
-<%@page import="com.bamsa.web.model.AssetTrackingModel"%>
+<%@page import="com.bamsa.web.model.ClientLeadModel"%>
 <%@page import="com.bamsa.web.model.EmployeeDetailsModel" %>
 
 <%@page import="java.util.List"%>
@@ -32,7 +32,7 @@ if(userData == null)
 
 <% 
 
-List<EmployeeModel> details=(List)request.getAttribute("report");
+List<EmployeeModel> details=(List)request.getAttribute("leadReport");
 String successmessage =(String)request.getAttribute("successmessage");
 if(successmessage==null){
 	successmessage="";
@@ -41,7 +41,6 @@ String message =(String)request.getAttribute("errormessage");
 if(message==null){
 	message="";
 }
-String data = (String)request.getAttribute("notesjson");
 
 %>
 <% 
@@ -59,8 +58,8 @@ boolean  showall=false;
  %>
 
 <body class="nav-md">
-    <div class="container body">
-      <div class="main_container">
+     <div class="container body">
+      <div class="main_container"> 
              <jsp:include page="header.jsp" />
 	<script>
    $(document).ready(function() {
@@ -92,8 +91,6 @@ function getperform() {
 }
 </script>
 
-
-
 	<div class="right_col" role="main">
           <h3 style="text-align: center; color: green"></h3><div class="">
             <div class="page-title">
@@ -103,29 +100,17 @@ function getperform() {
               <div style="/*! margin-left: 161px; */" class="col col-xs-6">
        <div class="btn-group btn-breadcrumb">
              <%if(showall){ %>
-            <a href="showTicket" id="riseticket" class="btn btn-info">Raise Ticket</a>
-            <a href="viewTicket" class="btn btn-info">Ticket Show</a>
-            <a href="licensedetails" class="btn btn-info">View All</a>
+            <a href="showClientLead" id="riseticket" class="btn btn-info">Raise Client Lead Ticket</a>
+            <a href="viewClientLead" class="btn btn-info">Show Client Lead Ticket</a>
+            <a href="licensedetails" class="btn btn-info">View All Client Lead Tickets</a>
             <%}else{ %>
-             <a href="showTicket" id="riseticket" class="btn btn-info">Raise Ticket</a>
-            <a href="viewTicket" class="btn btn-info">Ticket Show</a>
+             <a href="showClientLead" id="riseticket" class="btn btn-info">Raise Ticket</a>
+            <a href="viewClientLead" class="btn btn-info">Ticket Show</a>
             <%} %>
         </div>
         
 	</div>
-	<div class="col col-xs-6">
-						<%
-							if (showbranch) {
-						%>
-						<button style="padding: 3px 5px;"
-							class="btn btn-info btn-xs btn3d pull-right"
-							onclick="getperform()">
-							<b>Create Branch</b>
-						</button>
-						<%
-							}
-						%>
-					</div>
+
 <div class="title_left text-center">
                 <h3>Raise ticket for
 								Client Leads </h3>
@@ -156,14 +141,14 @@ function getperform() {
 
 
 	
-				<form:form action="ticketregister" method="post"
+				<form:form action="riseClientLead" method="post"
 					enctype="multipart/form-data" name="registration" id="registration"
 					class="register">
 					<div class="col-md-11 col-md-offset-1">
 						<fieldset class="row1">
 
 							<p>
-								<label for="serial" class="col-md-4 control-label">
+								<label for="Client Name" class="col-md-4 control-label">
 									Client Name</label> <input class="form-control long" type="text"
 									name="client" id="client" value="" required />
 
@@ -171,7 +156,7 @@ function getperform() {
 							</p>
 
 							<p>
-								<label for="name" class="col-md-6 control-label">
+								<label for="" class="col-md-6 control-label">
 									Contact Person Name </label> <input class="form-control long" type="text"
 									name="contactName" id="contactName" value="" required />
 							</p>
@@ -205,29 +190,8 @@ function getperform() {
 
 
 							</p>
-
-							<p>
-								<label for="serial" class="col-md-4 control-label">Purpose
-									 </label> 
-									<select id="selectoptions"  name="purpose" class="form-control" required="required">
-									
-								</select>
-
-
-							</p>
 							
 							<div id="warning" style="display:none">
-							<p>
-								<label  for="order_number" class=" col-md-6 control-label" >From
-									date</label> <input class="form-control long datepickers" type="text"
-									name="fromdate" id="from_date"  />
-							</p>
-							<p>
-								<label for="order_number" class=" col-md-6 control-label" >To
-									date</label> <input class="form-control long datepickers" type="text"
-									name="todate" id="to_dater" />
-
-							</p>
 							</div>
 						</fieldset>
 						</div>
@@ -238,83 +202,19 @@ function getperform() {
             </fieldset></center>
             </div>
 				</form:form>
-			</div>
+			</div> 
 
 		</div>
 	</div>
 </div>
 </div>
 </div>
+</div> 
 </div>
 </div>
-</div>
 
-	<script>
-
-$(document).ready(function() {
-	
-
-	  var tabMarque = [];
-	  var tabMarque1 = [];
-	  var jsondata=<%=data%>;
-	  var jsondata1={"asset":[["1","Broken"],["2","Lost"],["3","Repair"],["4","Taking Home"]],"license":[["5","Expired"]],"accessory":[["1","Broken"],["2","Lost"],["3","Repair"],["4","Taking Home"]],"consumable":[["1","Broken"],["2","Lost"],["3","Repair"]],"component":[["1","Broken"],["2","Lost"],["3","Repair"],["4","Taking Home"]]};	    
-	
-		console.log("hi");
-	    console.log(jsondata);
-
-	    $.each(jsondata, function(index, val) {
-	      tabMarque[index] = val;
-	    });
-	    $.each(jsondata1, function(index, val) {
-		      tabMarque1[index] = val;
-		    });
-
-	  $('#Marque').change(function(event) {
-	    // alert('Marque_change');
-	    var marque = $(this).val();
-	    // alert(marque);
-
-	    var htmlOption = '<option value="0">Please select any one option</option>';
-	    var htmlOption1='<option value="0">Please select any one option</option>';
-	    if (marque !== '0') {
-	      var itemsMarque = tabMarque[marque];
-	      var itemsMarque1 = tabMarque1[marque];
-	      //alert(JSON.stringify(itemsMarque));
-	      $.each(itemsMarque, function(key, value) {
-	        //alert("k=" + key + " v=" + JSON.stringify(value));
-	        htmlOption += '<option value="' + value[0] +'">' + value[1] + '</option>';
-	      });
-	      $.each(itemsMarque1, function(key, value) {
-		        //alert("k=" + key + " v=" + JSON.stringify(value));
-		        htmlOption1 += '<option value="' + value[0] +'">' + value[1] + '</option>';
-		      });
-	    }
-	    $('#Serie').html(htmlOption);
-	    $('#selectoptions').html(htmlOption1);
-	    
-	    
-	    
-	  });
-
-	 
-	});
-</script>
-<script>
-$(function() {
-    $('#selectoptions').change(function(){
-        if ($(this).val() == "4") {
-            $('#warning').show();
-            $("#from_date").prop('required',true);
-            $("#to_dater").prop('required',true);
-        } else {
-            $('#warning').hide();
-        }
-    });
-});
-
-</script>
 
 	
 <!-- JavaScript jQuery code from Bootply.com editor  -->
 	
-</body> --%>
+</body> 

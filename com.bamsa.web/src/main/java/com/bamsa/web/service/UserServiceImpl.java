@@ -1301,12 +1301,13 @@ public class UserServiceImpl implements UserService{
 		logger.info("enter into saveClientLead");
 		ClientLeadBean bean= clientLeadBuilder.buildClientLeadBean(clientLeadModel);
 		bean= userFunctionsFacade.saveClientLead(bean);
-		return null;
+		clientLeadModel=clientLeadBuilder.buildClientLeadModel(bean);
+		return clientLeadModel;
 	}
 	@Override
 	public List<EmployeeModel> getEmployeeLeadReportingDetails() {
 		 logger.info("enter into getEmployeesLeadReportingDetails ");
-			List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesReportingDetails();
+			List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesLeadReportingDetails();
 			List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
 			if(null!=beans && beans.size()>0){
 				for(EmployeeDetails bean :beans){
@@ -1319,5 +1320,38 @@ public class UserServiceImpl implements UserService{
 			logger.info(modelbeans);
 			logger.info("exit from userserviceimpl getEmployeesLeadReportingDetails");
 			return modelbeans;
+	}
+	@Override
+	public List<ClientLeadModel> getClientLeadTicket() {
+		logger.info("enter into getClientLeadTicket");
+		List<ClientLeadBean> bean=userFunctionsFacade.getClientLeadTicket();
+		List<ClientLeadModel> modelbeans=new ArrayList<ClientLeadModel>();
+		if(null!=bean &&bean.size()>0){
+			for(ClientLeadBean beans:bean){
+				ClientLeadModel model=new ClientLeadModel();
+				model.setCid(beans.getCid()); 
+				model.setApprovedBy(beans.getApprovedBy());
+				model.setApprovedDate(beans.getApprovedDate());
+				model.setRaisedDate(beans.getRaisedDate());
+				model.setRequestTo(beans.getRequestTo());
+				model.setRaisedBy(beans.getRaisedBy());
+				model.setCid(beans.getCid());
+				model.setRaisedDate(beans.getRaisedDate());
+				model.setEmpId(beans.getEmpId());
+				model.setClient(beans.getClient());
+				model.setContactName(beans.getContactName());
+				model.setDesignation(beans.getDesignation());
+				model.setEmailId(beans.getEmailId());
+				model.setLocation(beans.getLocation());
+				model.setPhoneNo(beans.getPhoneNo());
+				model.setStatus(beans.getStatus());
+				model.setFeedbackStatus(beans.getFeedbackStatus());
+				model.setMeetingDetails(beans.getMeetingDetails());
+				modelbeans.add(model);
+			}
+		}
+		logger.info(modelbeans);
+		logger.info("exit from getAssetTicket");
+		return modelbeans;
 	}
 }

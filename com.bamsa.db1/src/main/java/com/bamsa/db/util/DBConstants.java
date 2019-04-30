@@ -28,6 +28,7 @@ public class DBConstants {
 	public final static String LOAD_COMPANY_ACCESSORY="LOAD_COMPANY_ACCESSORY";
 	public final static String LOAD_COMPANY_COMPONENT="LOAD_COMPANY_COMPONENT";
 	public final static String LOAD_ASSET_TICKETS="LOAD_ASSET_TICKETS";
+	public final static String LOAD_CLIENT_LEAD_TICKETS="LOAD_CLIENT_LEAD_TICKETS";
 	public final static String UPDATE_BSTATUS="UPDATE_BSTATUS";
 	public final static String UPDATE_RSTATUS="UPDATE_RSTATUS";
 	public final static String UPDATE_ASSET_THSTATUS="UPDATE_ASSET_THSTATUS";

@@ -194,6 +194,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	String empdetails=dbProps.getProperty(DBConstants.LEAD_REPORTING_DETAILS);
 	logger.info(empdetails);
 	List<EmployeeDetails> details= jdbcTemplate.query(empdetails, new LeadReportUserRowMapper());
-		return null;
+		return details;
 	}
 }

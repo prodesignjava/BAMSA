@@ -135,7 +135,7 @@ if((empModel!=null) && (empModel.getDesigId() == 0 || empModel.getDesigId() == 8
 			
 			<li id="assets"><a href="<%=request.getContextPath() %>/showTicket"><i class="fa fa-database"></i>Asset Tracking</a></li>
 			 <%if(clientLeadShow){%>
-	          <li id="Lead"><a href="<%=request.getContextPath() %>/showTicket"><i class="fa fa-user"></i>Lead Tracking</a></li>
+	          <li id="Lead"><a href="<%=request.getContextPath() %>/showClientLead"><i class="fa fa-user"></i>Lead Tracking</a></li>
                 <%}%>
 			 <%if(mileStonesShow){%>
 			<li id="milestones"><a href="<%=request.getContextPath( )%>/Milestones"><i class="fa fa-flag-o"></i>My Milestones</a></li>

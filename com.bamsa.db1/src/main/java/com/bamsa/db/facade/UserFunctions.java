@@ -89,4 +89,5 @@ public interface UserFunctions {
     public ContactBean updateContactDetails(ContactBean contactdetails)throws DBUpdateException;
 	public ClientLeadBean saveClientLead(ClientLeadBean clientLeadBean);
 	public List<EmployeeDetails> getEmployeesLeadReportingDetails();
+	public List<ClientLeadBean> getClientLeadTicket();
 }

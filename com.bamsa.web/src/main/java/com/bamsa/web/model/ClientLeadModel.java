@@ -1,5 +1,7 @@
 package com.bamsa.web.model;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +17,11 @@ public class ClientLeadModel {
 	private String feedbackStatus;
 	private String createdBy;
 	private String meetingDetails;
+	private int requestTo;
+	private String empId;
+	private int approvedBy;
+	private Date approvedDate;
+	private Date raisedDate;
 	private int raisedBy;
 	public int getCid() {
 		return cid;
@@ -82,11 +89,41 @@ public class ClientLeadModel {
 	public void setMeetingDetails(String meetingDetails) {
 		this.meetingDetails = meetingDetails;
 	}
+	public Date getApprovedDate() {
+		return approvedDate;
+	}
+	public void setApprovedDate(Date approvedDate) {
+		this.approvedDate = approvedDate;
+	}
 	public int getRaisedBy() {
 		return raisedBy;
 	}
 	public void setRaisedBy(int raisedBy) {
 		this.raisedBy = raisedBy;
+	}
+	public int getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(int approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+	public Date getRaisedDate() {
+		return raisedDate;
+	}
+	public void setRaisedDate(Date raisedDate) {
+		this.raisedDate = raisedDate;
+	}
+	public int getRequestTo() {
+		return requestTo;
+	}
+	public void setRequestTo(int requestTo) {
+		this.requestTo = requestTo;
+	}
+	public String getEmpId() {
+		return empId;
+	}
+	public void setEmpId(String empId) {
+		this.empId = empId;
 	}
 
 }

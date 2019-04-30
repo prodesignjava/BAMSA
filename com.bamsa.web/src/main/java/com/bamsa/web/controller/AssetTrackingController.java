@@ -437,7 +437,7 @@ public class AssetTrackingController {
 		EmployeeDetailsModel empModelDetails= userServiceImpl.getEmplDetails(model.getRisedby());
         String recipientAddress = empModelDetails.getEmail();
         String subject = "Your ticket successfully";
-        String message = "Hi, You had successfully raised the ticket.The concerned administration department"
+        String message = "Hi, You had successfully raised the ticket.The concerned administration department"+" "
         		+ "person will contact you soon";
         		
        

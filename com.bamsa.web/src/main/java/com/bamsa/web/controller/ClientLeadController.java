@@ -1,6 +1,7 @@
 package com.bamsa.web.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +13,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bamsa.web.model.AssetTicketModel;
 import com.bamsa.web.model.ClientLeadModel;
 import com.bamsa.web.model.EmployeeDetailsModel;
 import com.bamsa.web.model.EmployeeModel;
@@ -38,7 +38,7 @@ public class ClientLeadController {
 			EmployeeDetailsModel empModelDetails= userServiceImpl.getEmplDetails(model.getRaisedBy());
 			 String recipientAddress = empModelDetails.getEmail();
 		        String subject = "Client Lead Successfully ";
-		        String message = "Hi, You had successfully raised the Client Lead.The concerned administration department"
+		        String message = "Hi, You had successfully raised the Client Lead.The concerned administration department"+" "
 		        		+ "person will contact you soon";
 		        		
 		       
@@ -68,7 +68,7 @@ public class ClientLeadController {
 			logger.error(e.getMessage());
 		}
 		
-		return "forward:/showTicket";
+		return "forward:/showClientLead";
 	}
 	public  ClientLeadModel buildClientLeadDetails(HttpServletRequest request) {
 		logger.info("enter into buildClientLeadDetails");
@@ -83,9 +83,12 @@ public class ClientLeadController {
 			model.setDesignation(request.getParameter("designation"));
 			model.setEmailId(request.getParameter("emailId"));
 			model.setPhoneNo(request.getParameter("phoneNo"));
+			model.setRequestTo(Integer.parseInt(request.getParameter("requestingto")));
+			model.setRaisedDate(new Date());
 			model.setRaisedBy(uid);
 		}catch(Exception e) {
 			logger.error(e.getMessage());		
+			e.printStackTrace();
 		}
 		logger.info(model);
 		logger.info("exit from buildClientLeadDetails");
@@ -94,14 +97,16 @@ public class ClientLeadController {
 	
 	@RequestMapping("/showClientLead")
 	public String  showClientLeadTicket(HttpServletRequest request) {
+		logger.info("enter into showClientLeadTicket");
 		try {
-			List<EmployeeModel> reportdetails = userServiceImpl.getEmployeesReportingDetails();
+			List<EmployeeModel> reportdetails = userServiceImpl.getEmployeeLeadReportingDetails();
 			 logger.info(reportdetails);
 				request.setAttribute("leadReport",reportdetails );	
 
 		}catch(Exception e) {
 			logger.error(e.getMessage());
 		}
+		logger.info("exit from showClientLead");
 		return "ticketforlead";
 	}
 	@RequestMapping("/viewClientLead")

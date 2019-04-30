@@ -20,7 +20,10 @@ public class ClientLeadBuilder {
     	bean.setCreatedBy(clientLeadModel.getCreatedBy());
     	bean.setLocation(clientLeadModel.getLocation());
     	bean.setStatus(clientLeadModel.getStatus());
+    	bean.setRaisedDate(clientLeadModel.getRaisedDate());
+    	bean.setRequestTo(clientLeadModel.getRequestTo());
     	bean.setMeetingDetails(clientLeadModel.getMeetingDetails());
+    	bean.setRaisedBy(clientLeadModel.getRaisedBy());
     	logger.info(bean);
     	logger.info("exit from buildClientLeadBean");
     	return bean;
@@ -37,6 +40,9 @@ public class ClientLeadBuilder {
     	model.setDesignation(clientLeadBean.getDesignation());
     	model.setFeedbackStatus(clientLeadBean.getFeedbackStatus());
     	model.setStatus(clientLeadBean.getStatus());
+    	model.setRequestTo(clientLeadBean.getRequestTo());
+    	model.setRaisedDate(clientLeadBean.getRaisedDate());
+    	model.setRaisedBy(clientLeadBean.getRaisedBy());
     	logger.info(model);
     	logger.info("exit from build ClientLeadModel");
     	return model;

@@ -1,6 +1,7 @@
 package com.bamsa.db.dao.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -12,8 +13,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
+import com.bamsa.db.beans.AssetTicketBean;
 import com.bamsa.db.beans.ClientLeadBean;
 import com.bamsa.db.dao.ClientLeadDAO;
+import com.bamsa.db.impls.mappers.AssetTicketRowMpper;
+import com.bamsa.db.impls.mappers.ClientLeadTicketRowMapper;
+import com.bamsa.db.util.DBConstants;
 @Repository
 public class ClientLeadDAOImpl implements ClientLeadDAO {
 	@Autowired
@@ -39,11 +44,21 @@ public class ClientLeadDAOImpl implements ClientLeadDAO {
 			recordParameters.put("createdBy",bean.getCreatedBy());
 			recordParameters.put("phoneNo", bean.getPhoneNo());
 			recordParameters.put("meetingDetails",bean.getMeetingDetails());
+			recordParameters.put("raisedBy",bean.getRaisedBy());
 			logger.info(recordParameters);
 			bean.setCid(jdbcInsert.executeAndReturnKey(recordParameters).intValue());
 			logger.info("Lead created");		
 		}	
 		return bean;
+	}
+	@Override
+	public List<ClientLeadBean> getClientLeadTicket() {
+		logger.info("enter into getClientLeadTicket");
+		String getTicket=dbProps.getProperty(DBConstants.LOAD_ASSET_TICKETS);
+		List<ClientLeadBean> details=jdbcTemplate.query(getTicket,new ClientLeadTicketRowMapper());
+		logger.info(details);
+		logger.info("exit from getClientLeadTicket");
+			return details;
 	}
 
 }
