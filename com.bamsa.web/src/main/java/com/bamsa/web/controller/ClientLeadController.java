@@ -12,7 +12,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bamsa.db.exceptions.DBUpdateException;
 import com.bamsa.web.model.ClientLeadModel;
 import com.bamsa.web.model.EmployeeDetailsModel;
 import com.bamsa.web.model.EmployeeModel;
@@ -30,10 +33,26 @@ public class ClientLeadController {
     private JavaMailSender mailSender;
 	private static Logger logger = Logger.getLogger(ClientLeadController.class);
 	@RequestMapping("/riseClientLead")
-	public String saveClientLead(HttpServletRequest request) {
+	public String saveClientLead( @RequestParam("file") MultipartFile file,HttpServletRequest request) {
 		logger.info("enter into leadTicketRaise");
 		try {
 			ClientLeadModel model= buildClientLeadDetails(request);
+			try{
+				if (!file.isEmpty()) {
+					 byte[] meetingDetailsFile = file.getBytes();					
+						if(meetingDetailsFile.length < ApplicationConstants.MAX_FILE_SIZE){
+							model.setMeetingDetailsFile(meetingDetailsFile);
+						}else{
+							request.setAttribute("message", "Select Appropriate Picture");
+							return "forward:/riseClientLead";
+						}	
+			        }
+				}catch(Exception e){
+					request.setAttribute("message", "File is Empty");
+					logger.error(e.getMessage());
+					return "forward:/riseClientLead";
+				}
+			
 			model= userServiceImpl.saveClientLead(model);
 			EmployeeDetailsModel empModelDetails= userServiceImpl.getEmplDetails(model.getRaisedBy());
 			 String recipientAddress = empModelDetails.getEmail();
@@ -84,8 +103,10 @@ public class ClientLeadController {
 			model.setEmailId(request.getParameter("emailId"));
 			model.setPhoneNo(request.getParameter("phoneNo"));
 			model.setRequestTo(Integer.parseInt(request.getParameter("requestingto")));
+			model.setMeetingDetails(request.getParameter("meetingDetails"));
 			model.setRaisedDate(new Date());
 			model.setRaisedBy(uid);
+			model.setStatus("NA");
 		}catch(Exception e) {
 			logger.error(e.getMessage());		
 			e.printStackTrace();
@@ -111,6 +132,7 @@ public class ClientLeadController {
 	}
 	@RequestMapping("/viewClientLead")
 	public String showRisedTickets(HttpServletRequest request){
+		logger.info("enter into viewClientLead");
 		try{
 		UserBean userData = (UserBean) request.getSession().getAttribute(ApplicationConstants.LOGIN_BEAN);
 		int uid =userData.getUid();
@@ -118,7 +140,7 @@ public class ClientLeadController {
 		int sid =empModel.getStreamId();
 		 List<EmployeeModel> reportdetails = userServiceImpl.getEmployeeLeadReportingDetails();
 		List<ClientLeadModel>clientLeadModel = userServiceImpl.getClientLeadTicket();
-		if(sid == 18){
+		if(sid == 18||uid==0){
 			request.setAttribute("clientDetails", clientLeadModel);
 			}
 		else{
@@ -138,8 +160,75 @@ public class ClientLeadController {
 }catch(Exception e){
 			logger.error(e.getMessage());
 		}
-		return "viewticket";
+		logger.info("exit from viewClientLead");
+		return "viewClientLead";
 		
+	}
+	@RequestMapping("/updateClientLeadTicketStatus")
+	public String updateTicketStatus(HttpServletRequest request) throws DBUpdateException{
+		logger.info("enter into updateTicketStatus");
+		try{
+		int cid = Integer.valueOf(request.getParameter("cid"));
+		logger.info("cid");
+		String status = request.getParameter("status");
+		logger.info(status);
+		Date today = new Date();
+		UserBean userData = (UserBean) request.getSession().getAttribute(ApplicationConstants.LOGIN_BEAN);
+		int uid =userData.getUid();
+		
+		if(status.equals("NA")){
+			ClientLeadModel model = new ClientLeadModel();
+			model.setApprovedBy(uid);
+			model.setApprovedDate(today);
+			model.setCid(cid);
+		
+			logger.info(model);
+			model = userServiceImpl.updateClientLeadStatus(model);
+		}
+		
+		}catch(Exception e){
+			logger.error(e.getMessage());
+		}
+		
+		logger.info("exit from updateTicketStatus");
+		return "viewClientLead";
+		
+	}
+	
+	@RequestMapping("/feedback")
+	public String feedbackSatusForm(HttpServletRequest request) {
+		logger.info("enter into feedbackStatusForm");
+		List<ClientLeadModel>clientLeadModel = userServiceImpl.getClientLeadTicket();
+		request.setAttribute("clientDetails", clientLeadModel);
+		return "feedbackStatus";
+	}
+	
+	@RequestMapping("/updateFeedbackStatus")
+	public String updateFeedBackStatus(HttpServletRequest request) {
+		logger.info("enter Into updateFeedbackStatus");
+		try {
+			int cid = Integer.valueOf(request.getParameter("cid"));
+			logger.info("cid");
+			String status = request.getParameter("status");
+			logger.info(status);
+			ClientLeadModel model  = new ClientLeadModel();
+			model.setCid(cid);
+			model.setFeedbackStatus(status);
+			logger.info(model);
+			int result=userServiceImpl.updateClientLeadFeedbackStatus(model);
+			feedbackSatusForm(request);
+			if(result!=0) {
+		    	  request.setAttribute("successmessage", "Successfully updated");
+			}
+			else {
+				request.setAttribute("errormessage", "failed");
+			}
+		}catch(Exception e) {
+			logger.error(e.getMessage());
+			return "feedbackStatus";
+		}
+		logger.info("exit from updateFeedbackStatus");
+		return "feedbackStatus";
 	}
 
 }

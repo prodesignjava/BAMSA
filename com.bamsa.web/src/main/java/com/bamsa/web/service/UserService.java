@@ -94,5 +94,6 @@ public interface UserService {
     public ContactModel updateContactDetails(ContactModel contactdetails)throws DBUpdateException;
 	public ClientLeadModel saveClientLead(ClientLeadModel clientLeadModel);
 	public List<ClientLeadModel> getClientLeadTicket();
-
+	public ClientLeadModel updateClientLeadStatus(ClientLeadModel clientLeadModel) throws DBUpdateException;
+	public int updateClientLeadFeedbackStatus(ClientLeadModel clientLeadModel)throws DBUpdateException;
 }

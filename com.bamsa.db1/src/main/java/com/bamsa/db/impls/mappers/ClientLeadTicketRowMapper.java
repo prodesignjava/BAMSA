@@ -26,12 +26,14 @@ public class ClientLeadTicketRowMapper implements RowMapper<ClientLeadBean> {
 		ticket.setDesignation(rs.getString("designation"));
 		ticket.setFeedbackStatus(rs.getString("feedbackStatus"));
 		ticket.setRequestTo(rs.getInt("requestTo"));
-		ticket.setRaisedBy(rs.getInt("risedBy"));
-		ticket.setRaisedDate(rs.getDate("risedDate"));
+		ticket.setRaisedBy(rs.getInt("raisedBy"));
+		ticket.setRaisedDate(rs.getDate("raiseDate"));
 		ticket.setApprovedBy(rs.getInt("approvedBy"));
 		ticket.setApprovedDate(rs.getDate("approvedDate"));
 		ticket.setStatus(rs.getString("status"));
 		ticket.setEmpId(rs.getString("empId"));
+		ticket.setMeetingDetails(rs.getString("meetingDetails"));
+		ticket.setMeetingDetailsFile(rs.getBytes("meetingDetailsFile"));
 		logger.info(ticket);
         logger.info("exit from ClientLeadBeanBean");
         return ticket;

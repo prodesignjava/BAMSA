@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import com.bamsa.db.beans.AssetTicketBean;
+import com.bamsa.db.beans.ClientLeadBean;
 import com.bamsa.db.beans.CompanyAccessoryBean;
 import com.bamsa.db.beans.CompanyAssetsBean;
 import com.bamsa.db.beans.CompanyComponentBean;
@@ -373,4 +374,5 @@ public CompanyConsumableModel buildCompanyConsumableModel (CompanyConsumableBean
 		logger.info("exit from buildBranchModelDetails");
 		return model;
 	}
+	
 }

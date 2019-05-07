@@ -23,6 +23,7 @@ public class ClientLeadBean {
 	private String empId;
 	private int requestTo;
 	private int raisedBy;
+	private byte[] meetingDetailsFile;
 	public int getCid() {
 		return cid;
 	}
@@ -124,6 +125,12 @@ public class ClientLeadBean {
 	}
 	public void setRequestTo(int requestTo) {
 		this.requestTo = requestTo;
+	}
+	public byte[] getMeetingDetailsFile() {
+		return meetingDetailsFile;
+	}
+	public void setMeetingDetailsFile(byte[] meetingDetailsFile) {
+		this.meetingDetailsFile = meetingDetailsFile;
 	}
 
 }

@@ -23,6 +23,7 @@ public class ClientLeadModel {
 	private Date approvedDate;
 	private Date raisedDate;
 	private int raisedBy;
+	private byte[] meetingDetailsFile;
 	public int getCid() {
 		return cid;
 	}
@@ -124,6 +125,12 @@ public class ClientLeadModel {
 	}
 	public void setEmpId(String empId) {
 		this.empId = empId;
+	}
+	public byte[] getMeetingDetailsFile() {
+		return meetingDetailsFile;
+	}
+	public void setMeetingDetailsFile(byte[] meetingDetailsFile) {
+		this.meetingDetailsFile = meetingDetailsFile;
 	}
 
 }

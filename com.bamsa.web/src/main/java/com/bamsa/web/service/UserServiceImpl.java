@@ -69,7 +69,7 @@ import com.bamsa.web.model.TaskDetailsModel;
 import com.bamsa.web.model.UserBean;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserFunctionsFacade userFunctionsFacade;
 	@Autowired
@@ -88,16 +88,17 @@ public class UserServiceImpl implements UserService{
 	private GrievanceBuilder grievancebuilder;
 	@Autowired
 	private AssetsBuilder assetsBuilder;
-    @Autowired
-    private CandidateInfoBuilder candidateinfoBuilder;
-    @Autowired
-    private ContactBuilder contactBuilder;
-    @Autowired
-    private OpeningInfoBuilder openingInfoBuilder;
-    @Autowired
-    private ClientLeadBuilder clientLeadBuilder;
-    
+	@Autowired
+	private CandidateInfoBuilder candidateinfoBuilder;
+	@Autowired
+	private ContactBuilder contactBuilder;
+	@Autowired
+	private OpeningInfoBuilder openingInfoBuilder;
+	@Autowired
+	private ClientLeadBuilder clientLeadBuilder;
+
 	private static Logger logger = Logger.getLogger(UserServiceImpl.class);
+
 	@Override
 	public UserBean authenticateUser(UserBean userBean) throws UserLoginException {
 		logger.info("Enter into authenticateUser");
@@ -105,14 +106,16 @@ public class UserServiceImpl implements UserService{
 		user = userFunctionsFacade.authenticateUser(user);
 		userBean = loginBuilder.buildUserBean(user);
 
-		if(user == null){
-			throw new UserLoginException(ExceptionConstants.INVALID_USER_LOGIN, ExceptionConstants.INVALID_USER_LOGIN_CODE);
+		if (user == null) {
+			throw new UserLoginException(ExceptionConstants.INVALID_USER_LOGIN,
+					ExceptionConstants.INVALID_USER_LOGIN_CODE);
 		}
 		logger.info("Exit from authenticateUser");
 		return userBean;
 	}
+
 	@Override
-	public ClockTimeModel saveClockInDetails(ClockTimeModel clockInDetails){
+	public ClockTimeModel saveClockInDetails(ClockTimeModel clockInDetails) {
 		logger.info("Enter into saveClockInDetails");
 		ClockTimeBean clockInBean = clockTimeBuilder.buildClockIntimeBean(clockInDetails);
 		clockInBean = userFunctionsFacade.saveClockInDetails(clockInBean);
@@ -121,13 +124,14 @@ public class UserServiceImpl implements UserService{
 		return clockInTimeDetais;
 
 	}
+
 	@Override
-	public List<ClockTimeModel> getClockDetials(int uid){
+	public List<ClockTimeModel> getClockDetials(int uid) {
 		logger.info("Enter into getClockDetials");
 		List<ClockTimeBean> beans = userFunctionsFacade.getClockDetails(uid);
 		List<ClockTimeModel> modelbeans = new ArrayList<ClockTimeModel>();
-		if(null!=beans && beans.size()>0){			
-			for (ClockTimeBean bean :beans){
+		if (null != beans && beans.size() > 0) {
+			for (ClockTimeBean bean : beans) {
 				ClockTimeModel model = new ClockTimeModel();
 				model.setUid(bean.getUid());
 				model.setClockInipAddress(bean.getClockInipAddress());
@@ -144,8 +148,9 @@ public class UserServiceImpl implements UserService{
 		return modelbeans;
 
 	}
+
 	@Override
-	public ClockTimeModel saveClockOutDetails(ClockTimeModel clockOutDetails)throws DBUpdateException{
+	public ClockTimeModel saveClockOutDetails(ClockTimeModel clockOutDetails) throws DBUpdateException {
 		logger.info("enter into buildClockOuttimeBean");
 		ClockTimeBean clockOutBean = clockTimeBuilder.buildClockOuttimeBean(clockOutDetails);
 		clockOutBean = userFunctionsFacade.saveClockOutDetails(clockOutBean);
@@ -155,8 +160,9 @@ public class UserServiceImpl implements UserService{
 		return clockOutTimeDetais;
 
 	}
+
 	@Override
-	public EmployeeDetailsModel registerEmployee(EmployeeDetailsModel regDetails,HttpServletRequest request){
+	public EmployeeDetailsModel registerEmployee(EmployeeDetailsModel regDetails, HttpServletRequest request) {
 		logger.info("Enter into registerEmployee");
 
 		User user = userBuilder.buildUser(regDetails, request);
@@ -166,20 +172,21 @@ public class UserServiceImpl implements UserService{
 		user.setEmployeeMappings(mappings);
 		details = userFunctionsFacade.registerUser(user);
 		logger.info(details);
-		regDetails =userBuilder.buildUserRegDetails(details);
+		regDetails = userBuilder.buildUserRegDetails(details);
 		logger.info("exit from registerEmployee");
 
 		return regDetails;
 
 	}
+
 	@Override
-	public List<EmployeeDetailsModel> getEmployees(){
+	public List<EmployeeDetailsModel> getEmployees() {
 		logger.info("enter into getEmployees");
-		List<EmployeeDetails> beans=userFunctionsFacade.getEmployees();
-		List<EmployeeDetailsModel> modelbeans=new ArrayList<EmployeeDetailsModel>();
-		if(null!=beans && beans.size()>0){
-			for(EmployeeDetails bean :beans){
-				EmployeeDetailsModel model= new EmployeeDetailsModel();
+		List<EmployeeDetails> beans = userFunctionsFacade.getEmployees();
+		List<EmployeeDetailsModel> modelbeans = new ArrayList<EmployeeDetailsModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeDetailsModel model = new EmployeeDetailsModel();
 				model.setUid(bean.getUid());
 				model.setName(bean.getName());
 				model.setEmpId(bean.getEmpId());
@@ -193,13 +200,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public EmployeeDetailsModel getEmployeeDetails(int uid){
-		logger.info("enter into getEmployeeDetails" );
+	public EmployeeDetailsModel getEmployeeDetails(int uid) {
+		logger.info("enter into getEmployeeDetails");
 		EmployeeDetails beans = userFunctionsFacade.getEmployeeDetails(uid);
 
 		EmployeeDetailsModel model = new EmployeeDetailsModel();
-		if(null!=beans ){			
-
+		if (null != beans) {
 
 			model.setName(beans.getName());
 			model.setMobileNo(beans.getMobileNo());
@@ -209,30 +215,31 @@ public class UserServiceImpl implements UserService{
 			model.setPicture(beans.getPicture());
 			model.setGender(beans.getGender());
 
-
 		}
 		logger.info(model);
 		logger.info("exit from getEmployeeDetails");
 		return model;
 
 	}
+
 	@Override
 	public EmployeeDetailsModel updateEmployeeDetails(EmployeeDetailsModel updatedDetails) throws DBUpdateException {
 		logger.info("enter into userserviceimpl updateEmployeeDetails");
 		EmployeeDetails details = userBuilder.buildEmployeeDetails(updatedDetails);
 		details = userFunctionsFacade.upateEmployeeDetails(details);
-		updatedDetails =userBuilder.buildUpdateUserDetails(details);
+		updatedDetails = userBuilder.buildUpdateUserDetails(details);
 		logger.info("exit from userserviceimpl updateEmployeeDetails");
 		return updatedDetails;
 	}
+
 	@Override
-	public List<EmployeeModel> getEmployeesUnderUser(int uid){
+	public List<EmployeeModel> getEmployeesUnderUser(int uid) {
 		logger.info("Enter into getEmployeesUnderUser");
 		List<Employee> employees = userFunctionsFacade.getEmployeesUnderUser(uid);
 		List<EmployeeModel> allEmployees = new ArrayList<EmployeeModel>();
-		if(null!=employees && employees.size()>0){
-			for (Employee bean : employees){
-				EmployeeModel model =new EmployeeModel();
+		if (null != employees && employees.size() > 0) {
+			for (Employee bean : employees) {
+				EmployeeModel model = new EmployeeModel();
 				model.setEmpId(bean.getEmpId());
 				model.setUid(bean.getUid());
 				model.setName(bean.getName());
@@ -247,17 +254,16 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from userserviceimpl getEmployeesUnderUser");
 		return allEmployees;
 
-
 	}
+
 	@Override
-	public List<EmployeeDetailsModel> presentEmployeeDetails()
-	{
+	public List<EmployeeDetailsModel> presentEmployeeDetails() {
 		logger.info("Enter into presentEmployeeDetails");
-		List<EmployeeDetails> beans=userFunctionsFacade.presentEmployeeDetails();
-		List<EmployeeDetailsModel> modelbeans=new ArrayList<EmployeeDetailsModel>();
-		if(null!=beans && beans.size()>0){
-			for(EmployeeDetails bean :beans){
-				EmployeeDetailsModel model= new EmployeeDetailsModel();
+		List<EmployeeDetails> beans = userFunctionsFacade.presentEmployeeDetails();
+		List<EmployeeDetailsModel> modelbeans = new ArrayList<EmployeeDetailsModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeDetailsModel model = new EmployeeDetailsModel();
 				model.setUid(bean.getUid());
 				model.setEmpId(bean.getEmpId());
 				model.setName(bean.getName());
@@ -267,35 +273,36 @@ public class UserServiceImpl implements UserService{
 		logger.info(modelbeans);
 		logger.info("exit from userserviceimpl presentEmployeeDetails");
 		return modelbeans;
-	}	
+	}
 
 	@Override
-	public List<EmployeeDetailsModel> getAllEmployees()
-	{
+	public List<EmployeeDetailsModel> getAllEmployees() {
 
 		logger.info("Enter into getAllEmployees");
-		List<EmployeeDetails> beans=userFunctionsFacade.getAllEmployees();
-		List<EmployeeDetailsModel> modelbeans= new ArrayList<EmployeeDetailsModel>();
-		if(null!=beans && beans.size()>0){
-			for(EmployeeDetails bean :beans){
-				EmployeeDetailsModel model= new EmployeeDetailsModel();
+		List<EmployeeDetails> beans = userFunctionsFacade.getAllEmployees();
+		List<EmployeeDetailsModel> modelbeans = new ArrayList<EmployeeDetailsModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeDetailsModel model = new EmployeeDetailsModel();
 				model.setUid(bean.getUid());
-				model.setEmpId(bean.getEmpId());;
+				model.setEmpId(bean.getEmpId());
+				;
 				model.setName(bean.getName());
 				modelbeans.add(model);
 			}
-		}	
+		}
 		logger.info("exit from userserviceimpl getAllEmployees");
 		return modelbeans;
 	}
+
 	@Override
 	public List<EmployeeTaskModel> getEmployeetask(int uid) {
 		logger.info("Enter into getEmployeetask");
 		List<EmployeeTask> employees = userFunctionsFacade.getEmployeetask(uid);
 		List<EmployeeTaskModel> allEmployees = new ArrayList<EmployeeTaskModel>();
-		if(null!=employees && employees.size()>0){
-			for (EmployeeTask bean : employees){
-				EmployeeTaskModel model =new EmployeeTaskModel();
+		if (null != employees && employees.size() > 0) {
+			for (EmployeeTask bean : employees) {
+				EmployeeTaskModel model = new EmployeeTaskModel();
 				model.setTid(bean.getTid());
 				model.setEmpid(bean.getEmpid());
 				model.setGivenbyname(bean.getGivenbyname());
@@ -314,9 +321,8 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from userserviceimpl getEmployeetask");
 		return allEmployees;
 
-
-
 	}
+
 	@Override
 	public EmployeeTaskModel saveEmployeeTask(EmployeeTaskModel employeeTaskDetails) {
 		EmployeeTask employeeTask = employeeTaskBuilder.buildEmployeetask(employeeTaskDetails);
@@ -325,13 +331,14 @@ public class UserServiceImpl implements UserService{
 		return employeeTaskDet;
 
 	}
+
 	@Override
 	public List<TaskDetailsModel> getTaskDetails(int uid) {
 		logger.info("Enter into getTaskDetails");
 		List<TaskDetails> tasks = userFunctionsFacade.getTaskDetails(uid);
-		List<TaskDetailsModel> alltasks =new ArrayList<TaskDetailsModel>();
-		if(null!=tasks && tasks.size()>0){
-			for (TaskDetails bean : tasks){
+		List<TaskDetailsModel> alltasks = new ArrayList<TaskDetailsModel>();
+		if (null != tasks && tasks.size() > 0) {
+			for (TaskDetails bean : tasks) {
 				TaskDetailsModel model = new TaskDetailsModel();
 				model.setTid(bean.getTid());
 				model.setEmpid(bean.getEmpid());
@@ -347,22 +354,20 @@ public class UserServiceImpl implements UserService{
 
 				alltasks.add(model);
 
-
 			}
-
 
 		}
 		logger.info(alltasks);
 		logger.info("exit from userserviceimpl getTaskDetails");
 		return alltasks;
 	}
+
 	@Override
-	public TaskDetailsModel updateTaskDetails(TaskDetailsModel updatedDetails)throws DBUpdateException
-	{
+	public TaskDetailsModel updateTaskDetails(TaskDetailsModel updatedDetails) throws DBUpdateException {
 		logger.info("enter into updateTaskDetails ");
-		TaskDetails details =employeeTaskBuilder.buildUpdateTaksDetails(updatedDetails);
+		TaskDetails details = employeeTaskBuilder.buildUpdateTaksDetails(updatedDetails);
 		try {
-			details =userFunctionsFacade.updateTaskDetails(details);
+			details = userFunctionsFacade.updateTaskDetails(details);
 		} catch (DBUpdateException e) {
 
 			e.printStackTrace();
@@ -371,18 +376,19 @@ public class UserServiceImpl implements UserService{
 		return updatedDetails;
 
 	}
+
 	@Override
-	public float updatePercentage(int tid,float percentage,String status,String reason) throws DBUpdateException{
-		percentage = userFunctionsFacade.updatePercentage(tid,percentage,status,reason);
+	public float updatePercentage(int tid, float percentage, String status, String reason) throws DBUpdateException {
+		percentage = userFunctionsFacade.updatePercentage(tid, percentage, status, reason);
 		return percentage;
 	}
+
 	@Override
 	public EmployeeDetailsModel getEmplDetails(int uid) {
-		EmployeeDetails bean =userFunctionsFacade.getEmplDetails(uid);
-		EmployeeDetailsModel model= new EmployeeDetailsModel();
+		EmployeeDetails bean = userFunctionsFacade.getEmplDetails(uid);
+		EmployeeDetailsModel model = new EmployeeDetailsModel();
 
-		if(null!=bean ){
-
+		if (null != bean) {
 
 			model.setEmpId(bean.getEmpId());
 			model.setName(bean.getName());
@@ -400,46 +406,46 @@ public class UserServiceImpl implements UserService{
 			model.setDesigId(bean.getDesigId());
 			model.setBranchname(bean.getBranchname());
 
-
 		}
 		return model;
 
 	}
+
 	@Override
 	public List<TaskDetailsModel> getEmpMilestones() {
 		logger.info("enter from getEmpMilestones");
 		List<TaskDetails> projdetails = userFunctionsFacade.getEmpMilestones();
-		List<TaskDetailsModel> allprojdetails =new ArrayList<TaskDetailsModel>();
-		if(null!=projdetails && projdetails.size()>0){
-			for(TaskDetails bean : projdetails){
+		List<TaskDetailsModel> allprojdetails = new ArrayList<TaskDetailsModel>();
+		if (null != projdetails && projdetails.size() > 0) {
+			for (TaskDetails bean : projdetails) {
 
 				TaskDetailsModel model = new TaskDetailsModel();
 
 				List<TaskDetailsModel> team = getEmployeesUnderProject(bean.getNpid());
-				float pc=0.0f;
-				int n=0;
-				if(team.size()> 0){
-					for(TaskDetailsModel mod:team){
+				float pc = 0.0f;
+				int n = 0;
+				if (team.size() > 0) {
+					for (TaskDetailsModel mod : team) {
 
-						if(Character.toString(mod.getTasktype()).equals("P")){
+						if (Character.toString(mod.getTasktype()).equals("P")) {
 							n++;
-							pc=pc+mod.getPercentagecompleted();
+							pc = pc + mod.getPercentagecompleted();
 						}
 					}
 				}
-				HashMap<String,TaskDetailsModel> uniqueset= new HashMap<String,TaskDetailsModel>();
-				if(team.size()> 0){
-					for(TaskDetailsModel beans :team){
+				HashMap<String, TaskDetailsModel> uniqueset = new HashMap<String, TaskDetailsModel>();
+				if (team.size() > 0) {
+					for (TaskDetailsModel beans : team) {
 
-						uniqueset.put(beans.getEmpid(),beans);
+						uniqueset.put(beans.getEmpid(), beans);
 					}
 				}
 				List<TaskDetailsModel> finallist = new ArrayList<TaskDetailsModel>(uniqueset.values());
 
 				logger.info(uniqueset);
 				logger.info(finallist);
-				model.setPercentagecompleted(pc/n);
-				model.setNpid(bean.getNpid());	
+				model.setPercentagecompleted(pc / n);
+				model.setNpid(bean.getNpid());
 				model.setProjectname(bean.getProjectname());
 				model.setDeadline(bean.getDeadline());
 				model.setTaskDescription(bean.getTaskDescription());
@@ -453,46 +459,46 @@ public class UserServiceImpl implements UserService{
 
 			}
 
-
 		}
 		logger.info(allprojdetails);
 		logger.info("exit from getEmpMilestones");
 		return allprojdetails;
 	}
+
 	@Override
-	public String resetPassword(UserBean user) throws  DBUpdateException{
+	public String resetPassword(UserBean user) throws DBUpdateException {
 		logger.info("Enter into resetPassword");
 
 		User userdb = loginBuilder.buildResetUser(user);
-		String rpassword=userFunctionsFacade.resetPassword(userdb);
+		String rpassword = userFunctionsFacade.resetPassword(userdb);
 		user = loginBuilder.buildUserBean(userdb);
 		logger.info("Exit from resetPassword");
 		return rpassword;
 	}
+
 	@Override
-	public GrievanceDetailsModel registergrievance(GrievanceDetailsModel reggrievance,HttpServletRequest request ){
+	public GrievanceDetailsModel registergrievance(GrievanceDetailsModel reggrievance, HttpServletRequest request) {
 		logger.info("enter into service registergrievance");
 		logger.info(reggrievance);
 		GrievanceDetails grievancedt = grievancebuilder.buildGrievanceDetails(reggrievance);
 		logger.info(grievancedt);
-		grievancedt= userFunctionsFacade.registerGrievance(grievancedt);
-		reggrievance= grievancebuilder.buildGrievanceDetailsModel(grievancedt);
+		grievancedt = userFunctionsFacade.registerGrievance(grievancedt);
+		reggrievance = grievancebuilder.buildGrievanceDetailsModel(grievancedt);
 		logger.info(reggrievance);
-		logger.info("exit from service registergrievance");    
+		logger.info("exit from service registergrievance");
 
 		return reggrievance;
 	}
 
 	@Override
-	public List<GrievanceDetailsModel> getAllGrievances()
-	{
+	public List<GrievanceDetailsModel> getAllGrievances() {
 
 		logger.info("Enter into getAllGrievances");
-		List<GrievanceDetails> beans=userFunctionsFacade.getAllGrievances();
-		List<GrievanceDetailsModel> modelbeans= new ArrayList<GrievanceDetailsModel>();
-		if(null!=beans && beans.size()>0){
-			for(GrievanceDetails bean :beans){
-				GrievanceDetailsModel model= new GrievanceDetailsModel();
+		List<GrievanceDetails> beans = userFunctionsFacade.getAllGrievances();
+		List<GrievanceDetailsModel> modelbeans = new ArrayList<GrievanceDetailsModel>();
+		if (null != beans && beans.size() > 0) {
+			for (GrievanceDetails bean : beans) {
+				GrievanceDetailsModel model = new GrievanceDetailsModel();
 				model.setGid(bean.getGid());
 				model.setUid(bean.getUid());
 				model.setGrievancedetails(bean.getGrievancedetails());
@@ -510,14 +516,14 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from userserviceimpl getAllGrievances");
 		return modelbeans;
 	}
+
 	@Override
-	public List<EmployeeTaskModel> getEmployeeTasksPerformance(String empid,int npid)
-	{
-		List<TaskDetails> details =userFunctionsFacade.getEmployeeTasksPerformance(empid,npid);
-		List<EmployeeTaskModel> modelbeans= new ArrayList<EmployeeTaskModel>();
-		if(null!=details && details.size()>0){
-			for(TaskDetails bean :details){
-				EmployeeTaskModel model= new EmployeeTaskModel();
+	public List<EmployeeTaskModel> getEmployeeTasksPerformance(String empid, int npid) {
+		List<TaskDetails> details = userFunctionsFacade.getEmployeeTasksPerformance(empid, npid);
+		List<EmployeeTaskModel> modelbeans = new ArrayList<EmployeeTaskModel>();
+		if (null != details && details.size() > 0) {
+			for (TaskDetails bean : details) {
+				EmployeeTaskModel model = new EmployeeTaskModel();
 				model.setPercentagecompleted(bean.getPercentagecompleted());
 				model.setTasktype(bean.getTasktype());
 				model.setTaskdescription(bean.getTaskDescription());
@@ -527,7 +533,7 @@ public class UserServiceImpl implements UserService{
 				model.setQueries(bean.getQueries());
 				model.setEmpid(bean.getEmpid());
 				model.setProjectname(bean.getProjectname());
-				
+
 				modelbeans.add(model);
 			}
 		}
@@ -535,109 +541,114 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from userserviceimpl getEmployeeTasksPerformance ");
 		return modelbeans;
 	}
+
 	@Override
-	public List<EmployeeModel> getEmployeesDepartmentDetails()
-	{    logger.info("enter into getEmployeesDepartmentDetails ");
-	List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesDepartmentDetails();
-	List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
-	if(null!=beans && beans.size()>0){
-		for(EmployeeDetails bean :beans){
-			EmployeeModel model= new EmployeeModel();
-			model.setEmpId(bean.getEmpId());
-			model.setName(bean.getName());
-			model.setStreamid(bean.getStreamId());
-			model.setDesigid(bean.getDesigId());
-			model.setHierarchyId(bean.getHierarchyId());
-			modelbeans.add(model);
+	public List<EmployeeModel> getEmployeesDepartmentDetails() {
+		logger.info("enter into getEmployeesDepartmentDetails ");
+		List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesDepartmentDetails();
+		List<EmployeeModel> modelbeans = new ArrayList<EmployeeModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeModel model = new EmployeeModel();
+				model.setEmpId(bean.getEmpId());
+				model.setName(bean.getName());
+				model.setStreamid(bean.getStreamId());
+				model.setDesigid(bean.getDesigId());
+				model.setHierarchyId(bean.getHierarchyId());
+				modelbeans.add(model);
+			}
 		}
+		logger.info(modelbeans);
+		logger.info("exit from userserviceimpl getEmployeesDepartmentDetails ");
+		return modelbeans;
 	}
-	logger.info(modelbeans);
-	logger.info("exit from userserviceimpl getEmployeesDepartmentDetails ");
-	return modelbeans;
-	}
+
 	@Override
-	public CompanyAssetModel registerAsset(CompanyAssetModel model){
+	public CompanyAssetModel registerAsset(CompanyAssetModel model) {
 		logger.info("enter into registerAsset");
 		CompanyAssetsBean bean = assetsBuilder.buildCompanyAssetBean(model);
 		logger.info(bean);
 		bean = userFunctionsFacade.registerAsset(bean);
 		logger.info(bean);
-		model=assetsBuilder.buildCompanyAssetModel(bean);
+		model = assetsBuilder.buildCompanyAssetModel(bean);
 		logger.info("exit from registerAsset");
 		logger.info(model);
 		return model;
 	}
+
 	@Override
 	public CompanyLicenseModel registerLicense(CompanyLicenseModel model) {
 		logger.info("enter into createLicense");
-		CompanyLicensesBean bean =assetsBuilder.buildCompanyLicensesBean(model);
-		bean=userFunctionsFacade.registerLicense(bean);
+		CompanyLicensesBean bean = assetsBuilder.buildCompanyLicensesBean(model);
+		bean = userFunctionsFacade.registerLicense(bean);
 		logger.info(bean);
-		model=assetsBuilder.buildCompanyLicenseModel(bean);
+		model = assetsBuilder.buildCompanyLicenseModel(bean);
 		logger.info("exit from createLicense");
 		logger.info(model);
 
 		return model;
 	}
+
 	@Override
 	public CompanyConsumableModel registerConsumable(CompanyConsumableModel model) {
 		logger.info("enter into registerConsumable");
-		CompanyConsumableBean bean=assetsBuilder.buildCompanyConsumableBean(model);
-		bean=userFunctionsFacade.registerConsumable(bean);
+		CompanyConsumableBean bean = assetsBuilder.buildCompanyConsumableBean(model);
+		bean = userFunctionsFacade.registerConsumable(bean);
 		logger.info(bean);
-		model=assetsBuilder.buildCompanyConsumableModel(bean);
+		model = assetsBuilder.buildCompanyConsumableModel(bean);
 		logger.info("exit from registerConsumable");
 		logger.info(model);
 		return model;
 	}
+
 	@Override
-	public CompanyAccessoryModel registerAccessoryDetails(CompanyAccessoryModel model){
+	public CompanyAccessoryModel registerAccessoryDetails(CompanyAccessoryModel model) {
 		logger.info("enter into registerAccessoryDetails");
-		CompanyAccessoryBean bean =assetsBuilder.buildCompanyAccessoryBean(model);
+		CompanyAccessoryBean bean = assetsBuilder.buildCompanyAccessoryBean(model);
 		bean = userFunctionsFacade.registerAccessory(bean);
 		logger.info(bean);
-		model=assetsBuilder.buildCompanyAccessoryModel(bean);
+		model = assetsBuilder.buildCompanyAccessoryModel(bean);
 		logger.info("exit from registerAccessoryDetails");
 		return model;
 
-
 	}
+
 	@Override
-	public CompanyComponentModel registerComponentDetails(CompanyComponentModel model){
+	public CompanyComponentModel registerComponentDetails(CompanyComponentModel model) {
 		logger.info("enter into registerComponentDetails");
 		CompanyComponentBean bean = assetsBuilder.buildCompanyComponentBean(model);
-		bean=userFunctionsFacade.registerComponent(bean);
-		model=assetsBuilder.buildCompanyComponentModel(bean);
+		bean = userFunctionsFacade.registerComponent(bean);
+		model = assetsBuilder.buildCompanyComponentModel(bean);
 		logger.info("exit from registerComponentDetails");
 		return model;
 	}
 
 	@Override
-	public List<EmployeeModel> getEmployeesReportingDetails()
-	{    logger.info("enter into getEmployeesReportingDetails ");
-	List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesReportingDetails();
-	List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
-	if(null!=beans && beans.size()>0){
-		for(EmployeeDetails bean :beans){
-			EmployeeModel model= new EmployeeModel();
-			model.setEmpId(bean.getEmpId());
-			model.setUid(bean.getUid());
-			modelbeans.add(model);
+	public List<EmployeeModel> getEmployeesReportingDetails() {
+		logger.info("enter into getEmployeesReportingDetails ");
+		List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesReportingDetails();
+		List<EmployeeModel> modelbeans = new ArrayList<EmployeeModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeModel model = new EmployeeModel();
+				model.setEmpId(bean.getEmpId());
+				model.setUid(bean.getUid());
+				modelbeans.add(model);
+			}
 		}
+		logger.info(modelbeans);
+		logger.info("exit from userserviceimpl getEmployeesReportingDetails");
+		return modelbeans;
 	}
-	logger.info(modelbeans);
-	logger.info("exit from userserviceimpl getEmployeesReportingDetails");
-	return modelbeans;
-	}
+
 	@Override
-	public List<CompanyLicenseModel> getCompanyLicensesDetails()
-	{
+	public List<CompanyLicenseModel> getCompanyLicensesDetails() {
 		logger.info("enter into getCompanyLicensesDetails");
 		List<CompanyLicensesBean> beans = userFunctionsFacade.getCompanyLicensesDetails();
-		List<CompanyLicenseModel> modelbeans= new ArrayList<CompanyLicenseModel>();
-		if(null!=beans && beans.size()>0){
-			for(CompanyLicensesBean bean :beans){
-				CompanyLicenseModel model= new CompanyLicenseModel();
+		List<CompanyLicenseModel> modelbeans = new ArrayList<CompanyLicenseModel>();
+		if (null != beans && beans.size() > 0) {
+			for (CompanyLicensesBean bean : beans) {
+				CompanyLicenseModel model = new CompanyLicenseModel();
 				model.setClid(bean.getClid());
 				model.setLicenseTag(bean.getLicenseTag());
 				model.setBranchname(bean.getBranchname());
@@ -667,14 +678,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<CompanyConsumableModel> getCompanyConsumableDetails()
-	{
+	public List<CompanyConsumableModel> getCompanyConsumableDetails() {
 		logger.info("enter into getCompanyConsumableDetails");
 		List<CompanyConsumableBean> beans = userFunctionsFacade.getCompanyConsumableDetails();
-		List<CompanyConsumableModel> modelbeans= new ArrayList<CompanyConsumableModel>();
-		if(null!=beans && beans.size()>0){
-			for(CompanyConsumableBean bean :beans){
-				CompanyConsumableModel model= new CompanyConsumableModel();
+		List<CompanyConsumableModel> modelbeans = new ArrayList<CompanyConsumableModel>();
+		if (null != beans && beans.size() > 0) {
+			for (CompanyConsumableBean bean : beans) {
+				CompanyConsumableModel model = new CompanyConsumableModel();
 				model.setCcid(bean.getCcid());
 				model.setConsumableTag(bean.getConsumableTag());
 				model.setConsumableName(bean.getConsumableName());
@@ -693,19 +703,20 @@ public class UserServiceImpl implements UserService{
 				model.setEmpid(bean.getEmpid());
 				modelbeans.add(model);
 			}
-		}	
+		}
 		logger.info(modelbeans);
 		logger.info("exit from getCompanyConsumableDetails");
 		return modelbeans;
 	}
+
 	@Override
 	public List<CompanyAssetModel> getCompanyAsset() {
 		logger.info("enter into getCompanyAsset");
-		List<CompanyAssetsBean> bean=userFunctionsFacade.getCompanyAsset();
-		List<CompanyAssetModel> modelbeans=new ArrayList<CompanyAssetModel>();
-		if(null!=bean && bean.size()>0){
-			for(CompanyAssetsBean beans:bean){
-				CompanyAssetModel model=new CompanyAssetModel();
+		List<CompanyAssetsBean> bean = userFunctionsFacade.getCompanyAsset();
+		List<CompanyAssetModel> modelbeans = new ArrayList<CompanyAssetModel>();
+		if (null != bean && bean.size() > 0) {
+			for (CompanyAssetsBean beans : bean) {
+				CompanyAssetModel model = new CompanyAssetModel();
 				model.setCaid(beans.getCaid());
 				model.setAssetName(beans.getAssetName());
 				model.setAssetSerial(beans.getAssetSerial());
@@ -733,14 +744,15 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from getCompanyAsset ");
 		return modelbeans;
 	}
+
 	@Override
 	public List<CompanyAccessoryModel> getCompanyAccessory() {
 		logger.info("enter into getCompanyAccessory");
-		List<CompanyAccessoryBean> bean=userFunctionsFacade.getCompanyAccessory();
-		List<CompanyAccessoryModel> modelbeans=new ArrayList<CompanyAccessoryModel>();
-		if(null!=bean && bean.size()>0){
-			for(CompanyAccessoryBean beans:bean){
-				CompanyAccessoryModel model=new CompanyAccessoryModel();
+		List<CompanyAccessoryBean> bean = userFunctionsFacade.getCompanyAccessory();
+		List<CompanyAccessoryModel> modelbeans = new ArrayList<CompanyAccessoryModel>();
+		if (null != bean && bean.size() > 0) {
+			for (CompanyAccessoryBean beans : bean) {
+				CompanyAccessoryModel model = new CompanyAccessoryModel();
 				model.setAccessoryname(beans.getAccessoryname());
 				model.setAccessorytag(beans.getAccessorytag());
 				model.setBranchname(beans.getBranchname());
@@ -762,14 +774,15 @@ public class UserServiceImpl implements UserService{
 		logger.info("exit from getCompanyAccessory");
 		return modelbeans;
 	}
+
 	@Override
 	public List<CompanyComponentModel> getCompanyComponent() {
 		logger.info("enter into getCompanyComponent");
-		List<CompanyComponentBean> bean=userFunctionsFacade.getCompanyComponent();
-		List<CompanyComponentModel> modelbeans=new ArrayList<CompanyComponentModel>();
-		if(null!=bean && bean.size()>0){
-			for(CompanyComponentBean beans:bean){
-				CompanyComponentModel model=new CompanyComponentModel();
+		List<CompanyComponentBean> bean = userFunctionsFacade.getCompanyComponent();
+		List<CompanyComponentModel> modelbeans = new ArrayList<CompanyComponentModel>();
+		if (null != bean && bean.size() > 0) {
+			for (CompanyComponentBean beans : bean) {
+				CompanyComponentModel model = new CompanyComponentModel();
 				model.setCategory(beans.getCategory());
 				model.setCcmid(beans.getCcmid());
 				model.setComponentName(beans.getComponentName());
@@ -789,25 +802,28 @@ public class UserServiceImpl implements UserService{
 		logger.info(modelbeans);
 		logger.info("exit from getCompanyComponent");
 		return modelbeans;
-	}@Override
-	public AssetTicketModel registerAssetTicket(AssetTicketModel model)
-	{     logger.info("enter into registerAssetTicket");
-	AssetTicketBean bean =assetsBuilder.buildAssetTicketBeanDetails(model);
-	bean=userFunctionsFacade.registerTicket(bean);
-	logger.info(bean);
-	model = assetsBuilder.buildAssetTicketModelDetails(bean);
-	logger.info(model);
-	logger.info("exit from registerAssetTicket");
-	return model;
 	}
+
+	@Override
+	public AssetTicketModel registerAssetTicket(AssetTicketModel model) {
+		logger.info("enter into registerAssetTicket");
+		AssetTicketBean bean = assetsBuilder.buildAssetTicketBeanDetails(model);
+		bean = userFunctionsFacade.registerTicket(bean);
+		logger.info(bean);
+		model = assetsBuilder.buildAssetTicketModelDetails(bean);
+		logger.info(model);
+		logger.info("exit from registerAssetTicket");
+		return model;
+	}
+
 	@Override
 	public List<AssetTicketModel> getAssetTicket() {
 		logger.info("enter into getAssetTicket");
-		List<AssetTicketBean> bean=userFunctionsFacade.getAssetTicket();
-		List<AssetTicketModel> modelbeans=new ArrayList<AssetTicketModel>();
-		if(null!=bean &&bean.size()>0){
-			for(AssetTicketBean beans:bean){
-				AssetTicketModel model=new AssetTicketModel();
+		List<AssetTicketBean> bean = userFunctionsFacade.getAssetTicket();
+		List<AssetTicketModel> modelbeans = new ArrayList<AssetTicketModel>();
+		if (null != bean && bean.size() > 0) {
+			for (AssetTicketBean beans : bean) {
+				AssetTicketModel model = new AssetTicketModel();
 				model.setAtid(beans.getAtid());
 				model.setApprovedby(beans.getApprovedby());
 				model.setApproveddate(beans.getApproveddate());
@@ -834,85 +850,85 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public AssetTicketModel updateBstatusOfAssetTicket(AssetTicketModel model)throws DBUpdateException
-	{    logger.info("enter into updateBstatusOfAssetTicket");
-	AssetTicketBean bean= assetsBuilder.buildUpdateBstatusOfAssetTicketBean(model);
-	bean=userFunctionsFacade.updateBstatusOfAssetTicket(bean);
-	model= assetsBuilder.buildUpdateBstatusOfAssetTicketModel(bean);
-	logger.info(model);
-	logger.info("exit from updateBstatusOfAssetTicket");
-	return model;
+	public AssetTicketModel updateBstatusOfAssetTicket(AssetTicketModel model) throws DBUpdateException {
+		logger.info("enter into updateBstatusOfAssetTicket");
+		AssetTicketBean bean = assetsBuilder.buildUpdateBstatusOfAssetTicketBean(model);
+		bean = userFunctionsFacade.updateBstatusOfAssetTicket(bean);
+		model = assetsBuilder.buildUpdateBstatusOfAssetTicketModel(bean);
+		logger.info(model);
+		logger.info("exit from updateBstatusOfAssetTicket");
+		return model;
 
 	}
+
 	@Override
-	public AssetTicketModel updateRstatusOfAssetTicket(AssetTicketModel model)throws DBUpdateException
-	{    logger.info("enter into updateRstatusOfAssetTicket");
-	AssetTicketBean bean= assetsBuilder.buildUpdateRstatusOfAssetTicketBean(model);
-	bean=userFunctionsFacade.updateRstatusOfAssetTicket(bean);
-	model= assetsBuilder.buildUpdateRstatusOfAssetTicketModel(bean);
-	logger.info(model);
-	logger.info("exit from updateRstatusOfAssetTicket");
-	return model;
+	public AssetTicketModel updateRstatusOfAssetTicket(AssetTicketModel model) throws DBUpdateException {
+		logger.info("enter into updateRstatusOfAssetTicket");
+		AssetTicketBean bean = assetsBuilder.buildUpdateRstatusOfAssetTicketBean(model);
+		bean = userFunctionsFacade.updateRstatusOfAssetTicket(bean);
+		model = assetsBuilder.buildUpdateRstatusOfAssetTicketModel(bean);
+		logger.info(model);
+		logger.info("exit from updateRstatusOfAssetTicket");
+		return model;
 
 	}
+
 	@Override
 	public AssetTicketModel updateAssetStatus(AssetTicketModel model) throws DBUpdateException {
 		logger.info("enter into updateAssetStatus");
-		AssetTicketBean bean=assetsBuilder.buildAssetStatusBeanDetails(model);
-		bean=userFunctionsFacade.updateAssetStatus(bean);
-		model=assetsBuilder.buildAssetStatusModelDetails(bean);
+		AssetTicketBean bean = assetsBuilder.buildAssetStatusBeanDetails(model);
+		bean = userFunctionsFacade.updateAssetStatus(bean);
+		model = assetsBuilder.buildAssetStatusModelDetails(bean);
 		logger.info("exit from updateAssetStatus");
 		return model;
 	}
 
 	@Override
-	public List<String> getAllEmployeesEmails()
-	{
-		List<String> allmails=userFunctionsFacade.getAllEmployeesMails();
+	public List<String> getAllEmployeesEmails() {
+		List<String> allmails = userFunctionsFacade.getAllEmployeesMails();
 
 		return allmails;
 
 	}
+
 	@Override
-	public GrievanceDetailsModel updateGrievanceTicketStatus(GrievanceDetailsModel model)throws DBUpdateException{
+	public GrievanceDetailsModel updateGrievanceTicketStatus(GrievanceDetailsModel model) throws DBUpdateException {
 		logger.info("enter into updateGrievanceTicketStatus");
-		GrievanceDetails bean=grievancebuilder.buildUpdateGrievnaceTicketUpdateStatus(model);
-		bean=userFunctionsFacade.updateGrievanceTicketStatus(bean);
-		model=grievancebuilder.buildUpdateGrievanceTicketUpdateStatus(bean);
+		GrievanceDetails bean = grievancebuilder.buildUpdateGrievnaceTicketUpdateStatus(model);
+		bean = userFunctionsFacade.updateGrievanceTicketStatus(bean);
+		model = grievancebuilder.buildUpdateGrievanceTicketUpdateStatus(bean);
 		logger.info("exit from updateGrievanceTicketStatus");
 		logger.info(model);
 		return model;
 	}
 
-
 	@Override
-	public EmployeeDetailsModel updateEmployeeReporttoDetails(EmployeeDetailsModel model)throws DBUpdateException
-	{
+	public EmployeeDetailsModel updateEmployeeReporttoDetails(EmployeeDetailsModel model) throws DBUpdateException {
 		logger.info("enter into updateEmployeeReporttoDetails");
-		EmployeeDetails bean=userBuilder.buildUpdateReporttoDetails(model);
-		bean=userFunctionsFacade.updateEmployeeReportToDetails(bean);
-		model=userBuilder.buildUpdateReporttoDetails(bean);
+		EmployeeDetails bean = userBuilder.buildUpdateReporttoDetails(model);
+		bean = userFunctionsFacade.updateEmployeeReportToDetails(bean);
+		model = userBuilder.buildUpdateReporttoDetails(bean);
 		logger.info(model);
 		logger.info("exit from updateEmployeeReporttoDetails");
 		return model;
 	}
+
 	@Override
 	public NewProjectModel saveNewproject(NewProjectModel newProject) {
 		NewProjectBean bean = employeeTaskBuilder.buildNewProjectDetailsBean(newProject);
-		bean=userFunctionsFacade.saveNewProject(bean);
-		newProject=employeeTaskBuilder.buildNewProjectDetailsModel(bean);
+		bean = userFunctionsFacade.saveNewProject(bean);
+		newProject = employeeTaskBuilder.buildNewProjectDetailsModel(bean);
 		logger.info(newProject);
 		logger.info("exit from saveNewproject");
 		return newProject;
 	}
 
-	public List<NewProjectModel> getEmployeeProjectDetails()
-	{
-		List<NewProjectBean> bean=userFunctionsFacade.getEmployeerojectDetails();
-		List<NewProjectModel> modelbeans=new ArrayList<NewProjectModel>();
-		if(null!=bean &&bean.size()>0){
-			for(NewProjectBean beans:bean){
-				NewProjectModel model=new NewProjectModel();
+	public List<NewProjectModel> getEmployeeProjectDetails() {
+		List<NewProjectBean> bean = userFunctionsFacade.getEmployeerojectDetails();
+		List<NewProjectModel> modelbeans = new ArrayList<NewProjectModel>();
+		if (null != bean && bean.size() > 0) {
+			for (NewProjectBean beans : bean) {
+				NewProjectModel model = new NewProjectModel();
 				model.setNpid(beans.getNpid());
 				model.setProjectname(beans.getProjectname());
 				modelbeans.add(model);
@@ -925,13 +941,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<TaskDetailsModel> getEmployeesUnderProject(int npid)
-	{
-		List<TaskDetails> beans =userFunctionsFacade.getEmployeesUnderProject(npid);
-		List<TaskDetailsModel> modelbeans= new ArrayList<TaskDetailsModel>();
-		if(null!=beans &&beans.size()>0){
-			for(TaskDetails details:beans){
-				TaskDetailsModel model=new TaskDetailsModel();
+	public List<TaskDetailsModel> getEmployeesUnderProject(int npid) {
+		List<TaskDetails> beans = userFunctionsFacade.getEmployeesUnderProject(npid);
+		List<TaskDetailsModel> modelbeans = new ArrayList<TaskDetailsModel>();
+		if (null != beans && beans.size() > 0) {
+			for (TaskDetails details : beans) {
+				TaskDetailsModel model = new TaskDetailsModel();
 				model.setTid(details.getTid());
 				model.setUid(details.getUid());
 				model.setEmpid(details.getEmpid());
@@ -943,7 +958,6 @@ public class UserServiceImpl implements UserService{
 				modelbeans.add(model);
 			}
 
-
 		}
 		logger.info(modelbeans);
 		logger.info("exit from getEmployeesUnderProject");
@@ -951,13 +965,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List<TaskDetailsModel> getProjectTypeDetails()
-	{
-		List<TaskDetails> bean=userFunctionsFacade.getProjectTypeDetails();
-		List<TaskDetailsModel> modelbeans= new ArrayList<TaskDetailsModel>();
-		if(null!=bean &&bean.size()>0){
-			for(TaskDetails beans:bean){
-				TaskDetailsModel model=new TaskDetailsModel();
+	public List<TaskDetailsModel> getProjectTypeDetails() {
+		List<TaskDetails> bean = userFunctionsFacade.getProjectTypeDetails();
+		List<TaskDetailsModel> modelbeans = new ArrayList<TaskDetailsModel>();
+		if (null != bean && bean.size() > 0) {
+			for (TaskDetails beans : bean) {
+				TaskDetailsModel model = new TaskDetailsModel();
 				model.setTasktype(beans.getTasktype());
 				model.setNpid(beans.getNpid());
 				model.setEmpid(beans.getEmpid());
@@ -976,77 +989,81 @@ public class UserServiceImpl implements UserService{
 	public NewBranchModel saveBranchDetails(NewBranchModel branch) {
 		logger.info("enter into saveBranchDetails");
 		NewBranchBean bean = assetsBuilder.buildBranchBeanDetails(branch);
-		bean=userFunctionsFacade.saveBranchDetails(bean);
-		branch=assetsBuilder.buildBranchModelDetails(bean);
+		bean = userFunctionsFacade.saveBranchDetails(bean);
+		branch = assetsBuilder.buildBranchModelDetails(bean);
 		logger.info(branch);
 		logger.info("exit from saveBranchDetails");
 		return branch;
 	}
+
 	@Override
 	public List<String> getBranchNameDetails() {
-		List<String> allbranch=userFunctionsFacade.getBranchNameDetails();
+		List<String> allbranch = userFunctionsFacade.getBranchNameDetails();
 
 		return allbranch;
 	}
+
 	@Override
 	public CandidateInfoModel saveCandidatedetails(CandidateInfoModel model) {
-        logger.info("enter into saveCandidatedetails");
-        CandidateInfoBean bean=candidateinfoBuilder.buildCandidateInfoBeandetails(model);
-        bean=userFunctionsFacade.saveCandidatedetails(bean);
-        model=candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
-        logger.info(model);
-        logger.info("exit from saveCandidatedetails");
-		
+		logger.info("enter into saveCandidatedetails");
+		CandidateInfoBean bean = candidateinfoBuilder.buildCandidateInfoBeandetails(model);
+		bean = userFunctionsFacade.saveCandidatedetails(bean);
+		model = candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
+		logger.info(model);
+		logger.info("exit from saveCandidatedetails");
+
 		return model;
 	}
+
 	@Override
 	public List<EmployeeModel> getAssignedtodetails() {
-		 logger.info("enter into getAssignedtodetails ");
-			List<EmployeeDetails> beans = userFunctionsFacade.getAssignedtodetails();
-			List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
-			if(null!=beans && beans.size()>0){
-				for(EmployeeDetails bean :beans){
-					EmployeeModel model= new EmployeeModel();
-					model.setEmpId(bean.getEmpId());
-					model.setUid(bean.getUid());
-					model.setName(bean.getName());
-					modelbeans.add(model);
-				}
+		logger.info("enter into getAssignedtodetails ");
+		List<EmployeeDetails> beans = userFunctionsFacade.getAssignedtodetails();
+		List<EmployeeModel> modelbeans = new ArrayList<EmployeeModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeModel model = new EmployeeModel();
+				model.setEmpId(bean.getEmpId());
+				model.setUid(bean.getUid());
+				model.setName(bean.getName());
+				modelbeans.add(model);
 			}
-			logger.info(modelbeans);
-			logger.info("exit from userserviceimpl getEmployeesReportingDetails");
-			return modelbeans;
-			}
+		}
+		logger.info(modelbeans);
+		logger.info("exit from userserviceimpl getEmployeesReportingDetails");
+		return modelbeans;
+	}
+
 	@Override
 	public ContactModel saveContactdetails(ContactModel contactdetails) {
-		logger.info("enter into saveContactdetails" );
-		ContactBean bean=contactBuilder.buildContactdetails(contactdetails);
-		bean=userFunctionsFacade.saveContactdetails(bean);
-		contactdetails=contactBuilder.buildContactdetailsmodel(bean);
+		logger.info("enter into saveContactdetails");
+		ContactBean bean = contactBuilder.buildContactdetails(contactdetails);
+		bean = userFunctionsFacade.saveContactdetails(bean);
+		contactdetails = contactBuilder.buildContactdetailsmodel(bean);
 		logger.info(contactdetails);
 		logger.info("exit from saveContactdetails");
 		return contactdetails;
 	}
+
 	@Override
 	public OpeningInfoModel saveOpeningdetails(OpeningInfoModel openings) {
 		logger.info("enter into saveOpeningdetails");
-		OpeningInfoBean bean=openingInfoBuilder.buildOpeningInfoBean(openings);
-		bean=userFunctionsFacade.saveOpeningdetails(bean);
-		openings=openingInfoBuilder.buildOpeningInfoModel(bean);
+		OpeningInfoBean bean = openingInfoBuilder.buildOpeningInfoBean(openings);
+		bean = userFunctionsFacade.saveOpeningdetails(bean);
+		openings = openingInfoBuilder.buildOpeningInfoModel(bean);
 		logger.info(openings);
 		logger.info("exit from saveOpeningdetails");
 		return openings;
 	}
-	
+
 	@Override
-	public List<ContactModel> getAccountDetails()
-	{
+	public List<ContactModel> getAccountDetails() {
 		logger.info("enter into getAccountdetails");
 		List<ContactBean> beans = userFunctionsFacade.getAccountDetails();
-		List<ContactModel>  modelbeans = new ArrayList<ContactModel>();
-		if(null!=beans && beans.size()>0){
-			for(ContactBean bean :beans){
-				ContactModel model= new ContactModel();
+		List<ContactModel> modelbeans = new ArrayList<ContactModel>();
+		if (null != beans && beans.size() > 0) {
+			for (ContactBean bean : beans) {
+				ContactModel model = new ContactModel();
 				model.setAcid(bean.getAcid());
 				model.setAccountName(bean.getAccountName());
 				model.setAccountOwner(bean.getAccountOwner());
@@ -1064,40 +1081,42 @@ public class UserServiceImpl implements UserService{
 				model.setReqlist(bean.getReqlist());
 				model.setHotlist(bean.getHotlist());
 				model.setCreateddate(bean.getCreateddate());
-				
+
 				modelbeans.add(model);
 				logger.info(modelbeans);
 			}
-			
+
 		}
 		logger.info("exit from getAccountdetails");
-		return modelbeans;	
+		return modelbeans;
 	}
+
 	@Override
 	public ContactModel getAccountOwnerdetails(String accountowner) {
 		logger.info("enter into getAccountOwnerdetails");
-		ContactBean beans=userFunctionsFacade.getAccountOwnerdetails(accountowner);
-		ContactModel model= new ContactModel();
-		if(null!=beans ){
+		ContactBean beans = userFunctionsFacade.getAccountOwnerdetails(accountowner);
+		ContactModel model = new ContactModel();
+		if (null != beans) {
 			model.setAcid(beans.getAcid());
 			model.setAccountName(beans.getAccountName());
 			model.setWebsite(beans.getWebsite());
 			model.setState(beans.getState());
 			model.setCity(beans.getCity());
 			model.setDescription(beans.getDescription());
-			
+
 			logger.info(model);
 		}
 		return model;
 	}
+
 	@Override
 	public List<CandidateInfoModel> getHotlistdetails() {
 		logger.info("enter into getHotlistdetails");
-		List<CandidateInfoBean> beans=userFunctionsFacade.getHotlistdetails();
-		List<CandidateInfoModel>  modelbeans = new ArrayList<CandidateInfoModel>();
-		if(null!=beans && beans.size()>0){
-			for(CandidateInfoBean bean :beans){
-				CandidateInfoModel model= new CandidateInfoModel();
+		List<CandidateInfoBean> beans = userFunctionsFacade.getHotlistdetails();
+		List<CandidateInfoModel> modelbeans = new ArrayList<CandidateInfoModel>();
+		if (null != beans && beans.size() > 0) {
+			for (CandidateInfoBean bean : beans) {
+				CandidateInfoModel model = new CandidateInfoModel();
 				model.setCiid(bean.getCiid());
 				model.setFirstName(bean.getFirstName());
 				model.setMiddleName(bean.getMiddleName());
@@ -1107,10 +1126,10 @@ public class UserServiceImpl implements UserService{
 				model.setState(bean.getState());
 				model.setCity(bean.getCity());
 				model.setVisaStatus(bean.getVisaStatus());
-                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                
-                String d=format.format(bean.getAvailableFrom());
-                model.setAvdate(d);
+				DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+				String d = format.format(bean.getAvailableFrom());
+				model.setAvdate(d);
 				model.setRelocate(bean.getRelocate());
 				model.setGender(bean.getGender());
 				model.setTypeofConsultant(bean.getTypeofConsultant());
@@ -1127,21 +1146,21 @@ public class UserServiceImpl implements UserService{
 				modelbeans.add(model);
 				logger.info(modelbeans);
 			}
-			
+
 		}
 		logger.info("exit from getHotlistdetails");
-		return modelbeans;	
+		return modelbeans;
 	}
+
 	@Override
-	public List<CandidateInfoModel> getCandidateDetails()
-	{
+	public List<CandidateInfoModel> getCandidateDetails() {
 		logger.info("enter into getCandidateDetails");
-	
-		List<CandidateInfoBean> beans=userFunctionsFacade.getCandidateDetails();
-		List<CandidateInfoModel> modelbeans= new ArrayList<CandidateInfoModel>();
-		if(null!=beans && beans.size()>0){
-			for(CandidateInfoBean bean :beans){
-				CandidateInfoModel model= new CandidateInfoModel();
+
+		List<CandidateInfoBean> beans = userFunctionsFacade.getCandidateDetails();
+		List<CandidateInfoModel> modelbeans = new ArrayList<CandidateInfoModel>();
+		if (null != beans && beans.size() > 0) {
+			for (CandidateInfoBean bean : beans) {
+				CandidateInfoModel model = new CandidateInfoModel();
 				model.setCiid(bean.getCiid());
 				model.setFirstName(bean.getFirstName());
 				model.setMiddleName(bean.getMiddleName());
@@ -1151,10 +1170,10 @@ public class UserServiceImpl implements UserService{
 				model.setState(bean.getState());
 				model.setCity(bean.getCity());
 				model.setVisaStatus(bean.getVisaStatus());
-                 DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-                
-                String d=format.format(bean.getAvailableFrom());
-                model.setAvdate(d);
+				DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+
+				String d = format.format(bean.getAvailableFrom());
+				model.setAvdate(d);
 				model.setRelocate(bean.getRelocate());
 				model.setGender(bean.getGender());
 				model.setTypeofConsultant(bean.getTypeofConsultant());
@@ -1172,18 +1191,18 @@ public class UserServiceImpl implements UserService{
 				logger.info(modelbeans);
 				logger.info("exit from getcandidatedetails");
 			}
-			
+
 		}
 		return modelbeans;
-		
+
 	}
-	
+
 	@Override
 	public OpeningInfoModel getOpeningdetails(int rqid) {
-		OpeningInfoBean beans =userFunctionsFacade.getOpeningdetails(rqid);
-		
-		OpeningInfoModel model=new OpeningInfoModel();
-		if(null!=beans ){
+		OpeningInfoBean beans = userFunctionsFacade.getOpeningdetails(rqid);
+
+		OpeningInfoModel model = new OpeningInfoModel();
+		if (null != beans) {
 			model.setPositionid(beans.getPositionid());
 			model.setPositiontitle(beans.getPositiontitle());
 			model.setState(beans.getState());
@@ -1203,14 +1222,15 @@ public class UserServiceImpl implements UserService{
 		}
 		return model;
 	}
+
 	@Override
 	public List<OpeningInfoModel> getAllOpeningdetails() {
 		logger.info("enter into getAllOpeningdetails");
-		List<OpeningInfoBean> beans=userFunctionsFacade.getAllOpeningdetails();
-		List<OpeningInfoModel> modelbeans =new ArrayList<OpeningInfoModel>();
-		if(null!=beans && beans.size()>0){
-			for(OpeningInfoBean bean:beans){
-				OpeningInfoModel model=new OpeningInfoModel();
+		List<OpeningInfoBean> beans = userFunctionsFacade.getAllOpeningdetails();
+		List<OpeningInfoModel> modelbeans = new ArrayList<OpeningInfoModel>();
+		if (null != beans && beans.size() > 0) {
+			for (OpeningInfoBean bean : beans) {
+				OpeningInfoModel model = new OpeningInfoModel();
 				model.setRqid(bean.getRqid());
 				model.setPositionid(bean.getPositionid());
 				model.setPositiontitle(bean.getPositiontitle());
@@ -1224,55 +1244,59 @@ public class UserServiceImpl implements UserService{
 				model.setEndclient(bean.getEndclient());
 				model.setCreatedby(bean.getCreatedby());
 				model.setCreateddate(bean.getCreateddate());
-		        model.setBilltype(bean.getBilltype());
-		        model.setEmpId(bean.getEmpId());
-		        model.setContactperson(bean.getContactperson());
+				model.setBilltype(bean.getBilltype());
+				model.setEmpId(bean.getEmpId());
+				model.setContactperson(bean.getContactperson());
 				modelbeans.add(model);
 				logger.info(modelbeans);
 			}
-			
+
 		}
 		logger.info("exit from getAllOpeningdetails");
-		return modelbeans;	
+		return modelbeans;
 	}
+
 	@Override
 	public CandidateInfoModel updateCandidateDetails(CandidateInfoModel candidatedetails) throws DBUpdateException {
-        logger.info("enter into updateCandidateDetails");
-        CandidateInfoBean bean=candidateinfoBuilder.buildCandidateInfoBeandetails(candidatedetails);
-        bean=userFunctionsFacade.updateCandidateDetails(bean);
-        candidatedetails=candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
-        logger.info(candidatedetails);
-        logger.info("exit from updateCandidateDetails");
+		logger.info("enter into updateCandidateDetails");
+		CandidateInfoBean bean = candidateinfoBuilder.buildCandidateInfoBeandetails(candidatedetails);
+		bean = userFunctionsFacade.updateCandidateDetails(bean);
+		candidatedetails = candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
+		logger.info(candidatedetails);
+		logger.info("exit from updateCandidateDetails");
 		return candidatedetails;
 	}
+
 	@Override
 	public OpeningInfoModel updatedOpeningDetails(OpeningInfoModel openingdetails) throws DBUpdateException {
-         logger.info("enter into updatedOpeningDetails");
-         OpeningInfoBean bean=openingInfoBuilder.buildOpeningInfoBean(openingdetails);
- 		bean=userFunctionsFacade.updatedOpeningDetails(bean);
- 		openingdetails=openingInfoBuilder.buildOpeningInfoModel(bean);
- 		logger.info(openingdetails);
+		logger.info("enter into updatedOpeningDetails");
+		OpeningInfoBean bean = openingInfoBuilder.buildOpeningInfoBean(openingdetails);
+		bean = userFunctionsFacade.updatedOpeningDetails(bean);
+		openingdetails = openingInfoBuilder.buildOpeningInfoModel(bean);
+		logger.info(openingdetails);
 		logger.info("exit from updatedOpeningDetails");
 		return openingdetails;
 	}
+
 	@Override
 	public CandidateInfoModel updateHotlistDetails(CandidateInfoModel hotlistdetails) throws DBUpdateException {
-		 logger.info("enter into updateHotlistDetails");
-		 CandidateInfoBean bean=candidateinfoBuilder.buildCandidateInfoBeandetails(hotlistdetails);
-	        bean=userFunctionsFacade.updateHotlistDetails(bean);
-	        hotlistdetails=candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
-	        logger.info(hotlistdetails);
-	        logger.info("exit from updateCandidateDetails");
-			return hotlistdetails;
-		}
+		logger.info("enter into updateHotlistDetails");
+		CandidateInfoBean bean = candidateinfoBuilder.buildCandidateInfoBeandetails(hotlistdetails);
+		bean = userFunctionsFacade.updateHotlistDetails(bean);
+		hotlistdetails = candidateinfoBuilder.buildCandidateInfoModeldetails(bean);
+		logger.info(hotlistdetails);
+		logger.info("exit from updateCandidateDetails");
+		return hotlistdetails;
+	}
+
 	@Override
 	public List<ContactModel> getSubcontractEmails() {
 		logger.info("enter into getSubcontractEmails");
-		List<ContactBean> bean=userFunctionsFacade.getSubcontractEmails();
-		List<ContactModel> modelbeans= new ArrayList<ContactModel>();
-		if(null!=bean &&bean.size()>0){
-			for(ContactBean beans:bean){
-				ContactModel model=new ContactModel();
+		List<ContactBean> bean = userFunctionsFacade.getSubcontractEmails();
+		List<ContactModel> modelbeans = new ArrayList<ContactModel>();
+		if (null != bean && bean.size() > 0) {
+			for (ContactBean beans : bean) {
+				ContactModel model = new ContactModel();
 				model.setAcid(beans.getAcid());
 				model.setPrimaryemail(beans.getPrimaryemail());
 				modelbeans.add(model);
@@ -1285,51 +1309,55 @@ public class UserServiceImpl implements UserService{
 		return modelbeans;
 
 	}
+
 	@Override
 	public ContactModel updateContactDetails(ContactModel contactdetails) throws DBUpdateException {
 		logger.info("enter into updateContactDetails");
-		ContactBean bean=contactBuilder.buildContactdetails(contactdetails);
-		bean=userFunctionsFacade.updateContactDetails(bean);
-		contactdetails=contactBuilder.buildContactdetailsmodel(bean);
-		 logger.info(contactdetails);
+		ContactBean bean = contactBuilder.buildContactdetails(contactdetails);
+		bean = userFunctionsFacade.updateContactDetails(bean);
+		contactdetails = contactBuilder.buildContactdetailsmodel(bean);
+		logger.info(contactdetails);
 		logger.info("exit from updateContactDetails");
-		
+
 		return contactdetails;
 	}
+
 	@Override
 	public ClientLeadModel saveClientLead(ClientLeadModel clientLeadModel) {
 		logger.info("enter into saveClientLead");
-		ClientLeadBean bean= clientLeadBuilder.buildClientLeadBean(clientLeadModel);
-		bean= userFunctionsFacade.saveClientLead(bean);
-		clientLeadModel=clientLeadBuilder.buildClientLeadModel(bean);
+		ClientLeadBean bean = clientLeadBuilder.buildClientLeadBean(clientLeadModel);
+		bean = userFunctionsFacade.saveClientLead(bean);
+		clientLeadModel = clientLeadBuilder.buildClientLeadModel(bean);
 		return clientLeadModel;
 	}
+
 	@Override
 	public List<EmployeeModel> getEmployeeLeadReportingDetails() {
-		 logger.info("enter into getEmployeesLeadReportingDetails ");
-			List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesLeadReportingDetails();
-			List<EmployeeModel>  modelbeans = new ArrayList<EmployeeModel>();
-			if(null!=beans && beans.size()>0){
-				for(EmployeeDetails bean :beans){
-					EmployeeModel model= new EmployeeModel();
-					model.setEmpId(bean.getEmpId());
-					model.setUid(bean.getUid());
-					modelbeans.add(model);
-				}
+		logger.info("enter into getEmployeesLeadReportingDetails ");
+		List<EmployeeDetails> beans = userFunctionsFacade.getEmployeesLeadReportingDetails();
+		List<EmployeeModel> modelbeans = new ArrayList<EmployeeModel>();
+		if (null != beans && beans.size() > 0) {
+			for (EmployeeDetails bean : beans) {
+				EmployeeModel model = new EmployeeModel();
+				model.setEmpId(bean.getEmpId());
+				model.setUid(bean.getUid());
+				modelbeans.add(model);
 			}
-			logger.info(modelbeans);
-			logger.info("exit from userserviceimpl getEmployeesLeadReportingDetails");
-			return modelbeans;
+		}
+		logger.info(modelbeans);
+		logger.info("exit from userserviceimpl getEmployeesLeadReportingDetails");
+		return modelbeans;
 	}
+
 	@Override
 	public List<ClientLeadModel> getClientLeadTicket() {
 		logger.info("enter into getClientLeadTicket");
-		List<ClientLeadBean> bean=userFunctionsFacade.getClientLeadTicket();
-		List<ClientLeadModel> modelbeans=new ArrayList<ClientLeadModel>();
-		if(null!=bean &&bean.size()>0){
-			for(ClientLeadBean beans:bean){
-				ClientLeadModel model=new ClientLeadModel();
-				model.setCid(beans.getCid()); 
+		List<ClientLeadBean> bean = userFunctionsFacade.getClientLeadTicket();
+		List<ClientLeadModel> modelbeans = new ArrayList<ClientLeadModel>();
+		if (null != bean && bean.size() > 0) {
+			for (ClientLeadBean beans : bean) {
+				ClientLeadModel model = new ClientLeadModel();
+				model.setCid(beans.getCid());
 				model.setApprovedBy(beans.getApprovedBy());
 				model.setApprovedDate(beans.getApprovedDate());
 				model.setRaisedDate(beans.getRaisedDate());
@@ -1347,11 +1375,31 @@ public class UserServiceImpl implements UserService{
 				model.setStatus(beans.getStatus());
 				model.setFeedbackStatus(beans.getFeedbackStatus());
 				model.setMeetingDetails(beans.getMeetingDetails());
+				model.setMeetingDetailsFile(beans.getMeetingDetailsFile());
 				modelbeans.add(model);
 			}
 		}
 		logger.info(modelbeans);
 		logger.info("exit from getAssetTicket");
 		return modelbeans;
+	}
+
+	@Override
+	public ClientLeadModel updateClientLeadStatus(ClientLeadModel clientLeadModel) throws DBUpdateException {
+		logger.info("enter into updateClientLeadStatus");
+		ClientLeadBean bean = clientLeadBuilder.buildClientLeadStatusBeanDetails(clientLeadModel);
+		bean = userFunctionsFacade.updateClientLeadStatus(bean);
+		clientLeadModel = clientLeadBuilder.buildClientLeadStatusModelDetails(bean);
+		logger.info("exit from updateClientLeadStatus");
+		return clientLeadModel;
+	}
+
+	@Override
+	public int updateClientLeadFeedbackStatus(ClientLeadModel clientLeadModel) throws DBUpdateException {
+		logger.info("enter into updateClientLeadFeedbackStatus");
+		ClientLeadBean bean = clientLeadBuilder.buildClientLeadFeedbackUpdate(clientLeadModel);
+		int result = userFunctionsFacade.updateClientLeadFeedbackStatus(bean);
+		logger.info("exit from UpdateClientLeadFeedbackStatus");
+		return result;
 	}
 }

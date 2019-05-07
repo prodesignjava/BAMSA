@@ -90,4 +90,6 @@ public interface UserFunctions {
 	public ClientLeadBean saveClientLead(ClientLeadBean clientLeadBean);
 	public List<EmployeeDetails> getEmployeesLeadReportingDetails();
 	public List<ClientLeadBean> getClientLeadTicket();
+	public ClientLeadBean updateClientLeadStatus(ClientLeadBean bean) throws DBUpdateException;
+	public int updateClientLeadFeedbackStatus(ClientLeadBean bean) throws DBUpdateException;
 }

@@ -224,7 +224,7 @@ $( document ).ready(function() {
              <div >
               <i class="fa fa-user fa-4x green"></i>
               </div>
-              <span class="count_bottom"><i class="fa fa-eye"></i><a href="<%=request.getContextPath( )%>/showTicket"> View Details</a></span>
+              <span class="count_bottom"><i class="fa fa-eye"></i><a href="<%=request.getContextPath( )%>/showClientLead"> View Details</a></span>
             </div>
              <%} %>
             

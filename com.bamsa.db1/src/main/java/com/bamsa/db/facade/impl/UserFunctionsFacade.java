@@ -610,6 +610,18 @@ public class UserFunctionsFacade implements UserFunctions {
 		logger.info("exit from getClientLeadTicket");
 		return clientLeadDAOImpl.getClientLeadTicket();
 	}
+	@Override
+	public ClientLeadBean updateClientLeadStatus(ClientLeadBean bean) throws DBUpdateException {
+		logger.info("enter into updateClientLeadfStatus");
+		logger.info("exit from updateClientLeadStatus");
+		return clientLeadDAOImpl.updateClientLeadStatus(bean);
+	}
+	@Override
+	public int updateClientLeadFeedbackStatus(ClientLeadBean bean) throws DBUpdateException {
+		logger.info(" enter into updateClientLeadFeedbackStatus");
+		logger.info("exit from updateClientLeadFeedbackStatus");
+		return clientLeadDAOImpl.updateClientLeadFeedbackStatus(bean);
+	}
 	
 	
 	

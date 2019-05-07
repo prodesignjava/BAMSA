@@ -97,26 +97,19 @@ $(document).ready(function(){
 		}
 	});
 	 
-
+		 $('#phone').keydown(function (e) {
+		 if (e.shiftKey || e.ctrlKey || e.altKey) {
+		 e.preventDefault();
+		 } else {
+		 var key = e.keyCode;
+		 if (!((key == 8) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
+		 e.preventDefault();
+		 }
+		 }
+		 });
 
 	 
 });
-</script>
-<script type="text/javascript">
-$(document).ready(function(){
-		$('#contactNo').keydown(function (e) {
-			console.log(e)
-			 if (e.shiftKey || e.ctrlKey || e.altKey) {
-			 e.preventDefault();
-			 } else {
-			 var key = e.keyCode;
-			 if (!((key == 8) || (key == 46) || (key >= 35 && key <= 40) || (key >= 48 && key <= 57) || (key >= 96 && key <= 105))) {
-			 e.preventDefault();
-			 }
-			 }
-			 });
-	}
-})
 </script>
 
 	<div class="right_col" role="main">
@@ -195,7 +188,7 @@ $(document).ready(function(){
                             <p>
 								<label for="name" class="col-md-6 control-label">
 									Contact No </label> <input class="form-control long" type="text"
-									name="phoneNo" id="phoneNo" value="" required />
+									name="phoneNo" id="contactNo" value="" required />
 							</p>
 							
 						    <p>

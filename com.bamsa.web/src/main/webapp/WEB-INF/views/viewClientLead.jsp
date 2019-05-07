@@ -5,7 +5,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@page import="java.util.List"%>
 <%@page import="com.bamsa.web.model.UserBean"%>
-<%@page import="com.bamsa.web.model.AssetTicketModel"%>
+<%@page import="com.bamsa.web.model.ClientLeadModel"%>
 <%@page import="com.bamsa.web.model.EmployeeModel"%>
 <%@page import="com.bamsa.web.model.EmployeeDetailsModel"%>
 <%@page import="java.util.Date"%>
@@ -25,7 +25,7 @@ if(userData == null)
 <%
 EmployeeDetailsModel empModel = (EmployeeDetailsModel)request.getSession().getAttribute(ApplicationConstants.EMPLOYEE_REGISTRATION_DETAILS);
 
-List<AssetTicketModel> ticketdetails=(List)request.getAttribute("ticketDetails"); 
+List<ClientLeadModel> ticketdetails=(List)request.getAttribute("clientDetails"); 
 List<EmployeeModel> employeedetails = (List)request.getAttribute("empdetails"); 
 
 %>
@@ -59,19 +59,19 @@ List<EmployeeModel> employeedetails = (List)request.getAttribute("empdetails");
              <jsp:include page="header.jsp" />
 <script>
 $( document ).ready(function() {
-	$("#assets").addClass("act");
-	$("#showticket").addClass("actv");
+/* 	$("#assets").addClass("act");
+ */	$("#showClientLead").addClass("actv");
 });
 
 
 </script>
 <script>
-function updatefunction(atid,ts,rs,bs){
+function updateClientLeadTicketStatus(cid,status){
 	
 	$.ajax({
 		type:"post",
-		url:"updateticketstatus?atid="+atid+"&ts="+ts+"&rs="+rs+"&bs="+bs,
-		success: function(){alert("Fixed/Approved");},
+		url:"updateClientLeadTicketStatus?cid="+cid+"&status="+status,
+		success: function(){alert("Approved");},
 		error: function(){alert("Not updated");}
 		
 		
@@ -79,6 +79,7 @@ function updatefunction(atid,ts,rs,bs){
 };
 
 </script>
+
 <script>
 $(document).ready(function(){
     $('#myTable').DataTable();
@@ -95,21 +96,24 @@ $(document).ready(function(){
               <div style="/*! margin-left: 161px; */" class="col col-xs-12">
        <div class="btn-group btn-breadcrumb">
              <%if(showall){ %>
-            <a href="showTicket" id="riseticket" class="btn btn-info">Raise Ticket</a>
-            <a href="viewTicket" id="showticket" class="btn btn-info">Ticket Show</a>
-           
+            <a href="showClientLead" id="riseticket" class="btn btn-info">Raise Client Lead Ticket</a>
+            <a href="viewClientLead" id="showticket" class="btn btn-info">Show Client Lead Ticket</a>
+            <a href="viewClientLead" class="btn btn-info">View All Client Lead Tickets</a> 
+            <a href="feedback" id="feedback"class="btn btn-info">Feedback</a>
             <%}else{ %>
-             <a href="showTicket" id="riseticket" class="btn btn-info">Raise Ticket</a>
-            <a href="viewTicket" id="showticket"class="btn btn-info">Ticket Show</a>
+             <a href="showClientLead" id="riseticket" class="btn btn-info">Raise Client Lead Ticket</a>
+            <a href="viewClientLead" id="showticket"class="btn btn-info">Show Client Lead Ticket</a>
+             <a href="feedback" id="feedback"class="btn btn-info">Feedback</a>
+           
             <%} %>
         </div>
         
 	</div>
-	<div class=" col-xs-3 col-xs-offset-9">
+	<%-- <div class=" col-xs-3 col-xs-offset-9">
 	<a href="<%=request.getContextPath( )%>/TicketDetailsExcel"><button type="button" class="btn btn-primary"><i class="fa fa-file-excel-o" aria-hidden="true"><b>Excel</b></i></button></a>
     <a href="<%=request.getContextPath( )%>/TicketDetailsPdf"><button type="button" class="btn btn-success"><i class="fa fa-file-pdf-o" aria-hidden="true"><b>PDF</b></i></button></a>
 	</div>
-
+ --%>
 
 				
 				
@@ -159,20 +163,22 @@ $(document).ready(function(){
 							<thead>
 								<tr class="st1">
                                 <th class="info" >S.No</th>
-                                <th class="info" >Client Name</th>
-                                <th class="info" >Contact Person Name</th>
-                                <th class="info" >Contact Person No</th>
-                                 <th class="info" >Contact Person Designation</th>
-								<th class="info" >Contact Person EmailId</th>
+                                <th class="info" >Client</th>
+                                <th class="info" >Contact Name</th>
+                                <th class="info" >Contact No</th>
+                                 <th class="info" >Contact Designation</th>
+								<th class="info" >Contact EmailId</th>
+								
 								<th class="info" >Client Location</th>
+								<th class="info">Meeting Confirmation</th>
 								<th class="info" >Request To</th>
 								<th class="info" >Raised By</th>
                                 <th class="info" >Raised Date</th>
 								<th class="info" >status</th>
-								<th class="info" >From Date</th>
-								 <th class="info" >To Date</th>
                                 <th class="info" >Approved By</th>
 								<th class="info" >Approved Date</th>
+								 <th class="info">Feedback Status</th>
+								
 								
 							</tr>
 						</thead>
@@ -181,31 +187,38 @@ $(document).ready(function(){
 						<%
 								int i=1;
 								if(null!=ticketdetails){
-                                 for(AssetTicketModel ticket:ticketdetails){
+                                 for(ClientLeadModel ticket:ticketdetails){
                                 	
                                   %>
 							<tr class="st1">
                                 <td ><%=i%></td>
-								<td ><%=ticket.getAssettype()%></td>
-								<td ><%=ticket.getTag()%></td>
+								<td ><%=ticket.getClient()%></td>
+								<td ><%=ticket.getContactName()%></td>
+								<td><%=ticket.getPhoneNo() %></td>
+								<td><%=ticket.getDesignation()%></td>
+								
+								<td><%=ticket.getEmailId()%></td>
+								<td><%=ticket.getLocation()%></td>
+								<%if(null!=ticket.getMeetingDetails()){ %>
+									<td><%=ticket.getMeetingDetails() %>
+									<%}else{ %>
+									<td><%=ticket.getMeetingDetailsFile()%></td>
+									<%} %>
+									
 								<% for(EmployeeModel emp1:employeedetails){
-									if(ticket.getRequestto()==emp1.getUid())
+									if(ticket.getRequestTo()==emp1.getUid())
 									{%>
 										<td ><%=emp1.getEmpId()%></td>
 									<%}}%>
-							
-								<td><%=ticket.getPurpose()%></td>
-								<td><%=ticket.getRemarks()%></td>
-								<td><%=ticket.getEmpid()%></td>
-								<td style='white-space:nowrap;'><%=ticket.getRiseddate()%></td>
-								
+								<td><%=ticket.getEmpId()%></td>
+								<td style='white-space:nowrap;'><%=ticket.getRaisedDate()%></td>																								
 								<%
 							      Date today=new Date();
-								if(ticket.getPurpose().equals("Taking Home") && null!=ticket.getThstatus()){ 
+								if(null!=ticket.getStatus()){ 
 									
-									if(ticket.getThstatus().equals("NA"))  {%>
+									if(ticket.getStatus().equals("NA"))  {%>
 				                        <%if(empModel.getStreamId()==18){%>
-										<td><button  class="btn btn-info btn-sm" onClick="updatefunction('<%=ticket.getAtid()%>','<%=ticket.getThstatus()%>','<%=ticket.getRstatus()%>','<%=ticket.getBstatus()%>')">APPROVE NOW</button></td>
+										<td><button  class="btn btn-info btn-sm" onClick="updateClientLeadTicketStatus('<%=ticket.getCid()%>','<%=ticket.getStatus()%>')">APPROVE NOW</button></td>
 								        <%}else{ %>
 								       <td><span class="label label-danger ">NOT APRROVED</span></td>
 								        <% }%>
@@ -213,23 +226,25 @@ $(document).ready(function(){
 										<td><span class="label label-success">APPROVED</span></td>
 									<% }%>
 								
-								<td style='white-space:nowrap;'><%=ticket.getFromdate()%></td>
-								<td style='white-space:nowrap;'><%=ticket.getTodate()%></td>
-								<%}
-							
+								<%} %>
 								
-								 %>
-								
-								
-								<% if(ticket.getApprovedby()!=0 && null!=ticket.getApproveddate()){%>
+								<% if(ticket.getApprovedBy()!=0 && null!=ticket.getApprovedDate()){%>
 								  <% for(EmployeeModel emp:employeedetails){
-									if(ticket.getApprovedby()==emp.getUid())
+									if(ticket.getApprovedBy()==emp.getUid())
 									{%>
 								  <td ><%=emp.getEmpId()%></td>
 								  <%}}%>
-								<td style='white-space:nowrap;'><%=ticket.getApproveddate()%></td>
+								<td style='white-space:nowrap;'><%=ticket.getApprovedDate()%></td>
+								<%}else{ %>
+								<td>---</td>
+								<td>---</td>
 								<%} %>
-								
+								<%if(null!=ticket.getFeedbackStatus()) {%>
+									<td><%=ticket.getFeedbackStatus() %></td>
+									
+								<%}else{ %>
+									<td>---</td>
+								<%} %>					
 							</tr>
 						<%i++;}}%>	
 						</tbody>
