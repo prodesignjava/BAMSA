@@ -269,8 +269,10 @@ $(document).ready(function(){
 						  </div>
 						  </div>
 	</section>
+	<!-- -- -->
 
 <script type="text/javascript" src='<c:url value="/static/js/jquery.dataTables.min.js"/>'></script> 
 <link rel="stylesheet" href='<c:url value="/static/css/jquery.dataTables.min.css"/>' />
 </body>
 </html>
+
